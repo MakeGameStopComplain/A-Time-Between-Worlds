@@ -7,11 +7,11 @@ class Collectable extends Entity {
     setCollector(collector) {
         if (collector.sprite) {
             this.collector = collector;
-            this.physics.add.overlap(this.sprite, collector.sprite);
+            this.physics.add.overlap(collector.sprite, this.sprite, this.onPickup, null, this);
         }
     }
 
-    onPickup() {
+    onPickup(collector, collectable) {
         this.active = false;
         if (this.collector) {
             this.collector.body.velocity.y = -1000;
