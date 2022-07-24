@@ -18,11 +18,11 @@ class Scene1 extends Phaser.Scene {
         var layer1 = map.createLayer(0, world1tiles, 0, 0);
         layer1.scale = gameScale / 16;
 
-        var mainChar = new protagonist(this.handler, this, "", "mainChar");
+        var mainChar = new Protagonist(this.handler, this, "", "mainChar");
         this.handler.addEntity(mainChar);
 
         this.physics.add.collider(mainChar.sprite, layer1)
-        layer1.setCollisionBetween(1, 2, 3, 4);
+        layer1.setCollisionBetween(1, 4);
     }
 
     update() {

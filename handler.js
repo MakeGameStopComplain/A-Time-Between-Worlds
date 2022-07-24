@@ -12,6 +12,9 @@ class Handler {
         for (let key in this.entities) {
             let entity = this.entities[key];
             entity.update();
+
+            // If entity inactive, add to entitiesToRemove
+            if (!entity.active) this.entitiesToRemove.push(entity);
         }
 
         // Adds new entities
