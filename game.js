@@ -8,13 +8,12 @@ window.onload = function() {
         physics: {
             default: "arcade",
             arcade: {
-                gravity: { y: 0, x: 0 },
+                gravity: { y: 555, x: 0 },
                 debug: false,
                 fps: 60
             }
         },
-        scene: [MainMenu, Scene1],
-        antialias: false,
+        scene: [/*MainMenu, */Scene1],
         pixelArt: true
     };
     

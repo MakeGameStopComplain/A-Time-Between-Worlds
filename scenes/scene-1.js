@@ -7,9 +7,15 @@ class Scene1 extends Phaser.Scene {
         this.handler = new Handler()
     }
 
-    preload() {}
+    preload() {
+        this.load.tilemapCSV('testmap', 'tilemaps/testlvl.csv');
+    }
 
-    create() {}
+    create() {
+        var map = this.make.tilemap({ key: "testmap", tileWidth: 60, tileHeight: 60 });
+        var world1tiles = map.addTilesetImage("world1tileset", "world1tiles");
+        var examplayer = map.createLayer(0, world1tiles, 0, 0);
+    }
 
     update() {
         this.handler.update();
