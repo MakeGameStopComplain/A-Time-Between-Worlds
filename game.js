@@ -1,5 +1,7 @@
-const gameWidth = 640 * 1.5;
-const gameHeight = 360 * 1.5;
+const gameWidth = 960;
+const gameHeight = 540;
+const tileSize = 32;
+const gameScale = gameWidth / tileSize;
 
 window.onload = function() {
     var config = {

@@ -1,5 +1,5 @@
 class Entity {
-    constructor(handler, scene, entityName) { 
+    constructor(handler, scene, spriteName, entityName) { 
         // Setup settings
         this.scene = scene;
         this.entityName = entityName; // No spaces in entity name
@@ -11,8 +11,8 @@ class Entity {
         this.parent = null;
         this.children = {};
         // Sprite
-        this.spriteName = ""; // Hard coded per entity
-        this.sprite = this.scene.physics.add.sprite(0, 0, spriteName);
+        this.spriteName = spriteName; // Hard coded per entity
+        this.sprite = this.scene.physics.add.sprite(0, 0, this.spriteName);
         // Bounding box
         this.boxWidth = this.sprite.width;
         this.boxHeight = this.sprite.height;
