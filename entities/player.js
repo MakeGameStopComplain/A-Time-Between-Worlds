@@ -1,4 +1,4 @@
-class Protagonist extends Entity {
+class Player extends Entity {
     constructor(handler, scene, spriteName, entityName) {
         super(handler, scene, spriteName, entityName);
 
