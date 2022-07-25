@@ -1,10 +1,11 @@
 class Entity {
-    constructor(handler, scene, spriteName, entityName) { 
+    constructor(handler, scene, spriteName, entityName, x, y, xVel, yVel) { 
         // Setup settings
         this.scene = scene;
         this.entityName = entityName; // No spaces in entity name
         this.entityID = handler.entityIDCounter;
-        handler.entityIDCounter++;
+        this.handler = handler;
+        this.handler.entityIDCounter++;
         this.active = true;
         this.hash = `${this.entityName}${this.entityID}`;
         // Heritage
@@ -16,6 +17,9 @@ class Entity {
         // Bounding box
         this.boxWidth = this.sprite.width;
         this.boxHeight = this.sprite.height;
+        // Position
+        this.sprite.setPosition(x, y);
+        this.sprite.setVelocity(xVel, yVel)
     };
 
     /*
@@ -25,6 +29,7 @@ class Entity {
         this.parent = parent;
         parent.children[this.hash] = this;
     }
+
     clearParent() {
         if (!this.parent) return;
         delete this.parent.children[this.hash];
@@ -64,7 +69,8 @@ class Entity {
     }
 
     destroy() {
-        this.clearParent();
+        // this.clearParent();
+        this.handler.removeEntity(this);
         this.sprite.destroy();
     }
 }

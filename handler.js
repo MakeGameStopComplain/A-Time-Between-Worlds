@@ -6,6 +6,9 @@ class Handler {
     entities = {};
     entitiesToAdd = [];
     entitiesToRemove = [];
+
+    // Data about player for switching scenes
+    playerData = [0, 0, 0, 555, true]
     
     update() {
         // Updates every active entity
@@ -36,6 +39,10 @@ class Handler {
 
     removeEntity(entity) {
         this.entitiesToRemove.push(entity);
+    }
+
+    getPlayer() {
+        return this.entities["player0"];
     }
 
 }
