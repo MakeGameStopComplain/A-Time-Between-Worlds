@@ -4,6 +4,7 @@ class Player extends Entity {
 
         this.Button1 = this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.Z);
         this.Button2 = this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.X);
+        this.Button3 = this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.C);
         this.cursors = this.scene.input.keyboard.createCursorKeys();
 
         this.sprite.setCollideWorldBounds(true);
@@ -35,6 +36,19 @@ class Player extends Entity {
         }
 
         this.sprite.setVelocity(clamp(velocityX, velocityCap, -velocityCap), clamp(velocityY, velocityCap, -velocityCap));
+        
+        if (Phaser.Input.Keyboard.JustDown(this.Button3)) {
+            switch (this.scene.timeState) {
+                case "apocalyptic":
+                    this.scene.timeState = "normal";
+                    break;
+                case "normal":
+                    this.scene.timeState = "apocalyptic";
+                    break;
+            }
+        }
+        
+        //    console.log(this.scene.timeState);
 
         super.update();
     }

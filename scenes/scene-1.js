@@ -4,7 +4,8 @@ class Scene1 extends Phaser.Scene {
 
     constructor() {
         super("scene-1");
-        this.handler = new Handler()
+        this.handler = new Handler();
+        this.timeState = "normal"; // "apocalyptic"
     }
 
     preload() {
