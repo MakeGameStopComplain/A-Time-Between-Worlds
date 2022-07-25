@@ -10,20 +10,21 @@ class Scene1 extends Phaser.Scene {
 
     preload() {
         this.load.tilemapCSV('testmap', 'tilemaps/testlvl.csv');
+        this.load.tilemapCSV('testmap2', 'tilemaps/testlvl apocalyptic.csv');
         this.load.image('world1tiles', 'image/world1tileset.png');
     }
 
     create() {
-        var map = this.make.tilemap({ key: "testmap", tileWidth: 32, tileHeight: 32 });
-        var world1tiles = map.addTilesetImage("world1tileset", "world1tiles");
-        var layer1 = map.createLayer(0, world1tiles, 0, 0);
-        layer1.scale = gameScale / 16;
+        this.baseTilemap = this.make.tilemap({ key: "testmap", tileWidth: 32, tileHeight: 32 });
+        var world1tiles = this.baseTilemap.addTilesetImage("world1tileset", "world1tiles");
+        this.layer1 = this.baseTilemap.createLayer(0, world1tiles, 0, 0);
+        this.layer1.scale = gameScale / 16;
 
-        var mainChar = new Player(this.handler, this, "", "mainChar");
-        this.handler.addEntity(mainChar);
+        this.mainChar = new Player(this.handler, this, "", "mainChar");
+        this.handler.addEntity(this.mainChar);
 
-        this.physics.add.collider(mainChar.sprite, layer1)
-        layer1.setCollisionBetween(1, 4);
+        this.tileCollider = this.physics.add.collider(this.mainChar.sprite, this.layer1)
+        this.layer1.setCollisionBetween(1, 4);
     }
 
     update() {
@@ -32,6 +33,27 @@ class Scene1 extends Phaser.Scene {
     
     onTimeStateChange() {
         console.log(this.timeState);
+        
+        this.baseTilemap.destroy();
+        this.physics.world.removeCollider(this.tileCollider);
+        switch (this.timeState) {
+            case "normal":
+                this.baseTilemap = this.make.tilemap({ key: "testmap", tileWidth: 32, tileHeight: 32 });
+                var world1tiles = this.baseTilemap.addTilesetImage("world1tileset", "world1tiles");
+                this.layer1 = this.baseTilemap.createLayer(0, world1tiles, 0, 0);
+                this.layer1.scale = gameScale / 16;
+                this.tileCollider = this.physics.add.collider(this.mainChar.sprite, this.layer1)
+                this.layer1.setCollisionBetween(1, 4);
+                break;
+            case "apocalyptic":
+                this.baseTilemap = this.make.tilemap({ key: "testmap2", tileWidth: 32, tileHeight: 32 });
+                var world1tiles = this.baseTilemap.addTilesetImage("world1tileset", "world1tiles");
+                this.layer1 = this.baseTilemap.createLayer(0, world1tiles, 0, 0);
+                this.layer1.scale = gameScale / 16;
+                this.tileCollider = this.physics.add.collider(this.mainChar.sprite, this.layer1)
+                this.layer1.setCollisionBetween(1, 4);
+                break;
+        }
     }
 
 }
