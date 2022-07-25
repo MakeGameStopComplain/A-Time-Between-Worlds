@@ -2,10 +2,9 @@ const gameWidth = 960;
 const gameHeight = 540;
 const tileSize = 32;
 const gameScale = gameWidth / tileSize;
-let handler;
 
 window.onload = function() {
-    let config = {
+    var config = {
         width: gameWidth,
         height: gameHeight,
         physics: {
@@ -16,11 +15,9 @@ window.onload = function() {
                 fps: 60
             }
         },
-        scene: [/*MainMenu, */NormalWorld, ApocalypticWorld],
+        scene: [/*MainMenu, */Scene1],
         pixelArt: true
     };
     
-    let game = new Phaser.Game(config);
-    handler = new Handler()
-
+    var game = new Phaser.Game(config);
 };
