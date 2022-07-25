@@ -46,9 +46,8 @@ class Player extends Entity {
                     this.scene.timeState = "apocalyptic";
                     break;
             }
+            this.scene.onTimeStateChange();
         }
-        
-        //    console.log(this.scene.timeState);
 
         super.update();
     }

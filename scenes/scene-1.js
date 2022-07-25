@@ -29,5 +29,9 @@ class Scene1 extends Phaser.Scene {
     update() {
         this.handler.update();
     }
+    
+    onTimeStateChange() {
+        console.log(this.timeState);
+    }
 
 }
