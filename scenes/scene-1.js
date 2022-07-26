@@ -11,6 +11,8 @@ class Scene1 extends Phaser.Scene {
     }
 
     preload() {
+        this.load.spritesheet("normal-player", "image/normal-player.png", { frameWidth: 32, frameHeight: 32 });
+        this.load.spritesheet("apocalyptic-player", "image/apocalyptic-player", { frameWidth: 32, frameHeight: 32 });
         this.load.tilemapCSV("testmap", "tilemaps/testlvl.csv");
         this.load.tilemapCSV("testmap2", "tilemaps/testlvl apocalyptic.csv");
         this.load.image("world1tiles", "image/world1tileset.png");
@@ -62,6 +64,27 @@ class Scene1 extends Phaser.Scene {
         this.cameras.main.setBounds(0, 0, gameWidth * this.levelLength / 16, gameHeight * this.levelHeight / 9);
         this.cameras.main.startFollow(this.player.sprite);
 
+        // Animations
+        this.anims.create({
+            key: "normal-player-idle",
+            frames: this.anims.generateFrameNumbers("normal-player", { start: 0, end: 3 }),
+            frameRate: 8,
+            repeat: -1
+        });
+
+        this.anims.create({
+            key: "normal-player-run",
+            frames: this.anims.generateFrameNumbers("normal-player", { start: 4, end: 10 }),
+            frameRate: 8,
+            repeat: -1
+        });
+
+        this.anims.create({
+            key: "normal-player-stopping",
+            frames: this.anims.generateFrameNumbers("normal-player", { start: 14, end: 17 }),
+            frameRate: 8,
+            repeat: 0
+        });
     }
 
     update() {

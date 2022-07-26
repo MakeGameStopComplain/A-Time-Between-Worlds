@@ -11,6 +11,8 @@ class Player extends Entity {
         this.sprite.setDragX(5000);
         this.sprite.setGravityY(2000);
         this.sprite.scale = gameScale / 16;
+
+        this.lastVelocityX = 0
     }  
 
     update() {
@@ -25,9 +27,11 @@ class Player extends Entity {
 
         if (this.cursors.left.isDown) {
             velocityX -= speed;
+            this.sprite.flipX = false;
         }
         if (this.cursors.right.isDown) {
             velocityX += speed;
+            this.sprite.flipX = true;
         }
         if ((this.cursors.up.isDown || this.Button2.isDown) && 
             this.sprite.body.blocked.down) 
@@ -36,7 +40,20 @@ class Player extends Entity {
         }
 
         this.sprite.setVelocity(clamp(velocityX, velocityCap, -velocityCap), clamp(velocityY, velocityCap, -velocityCap));
-        
+
+        if (Math.abs(velocityX) > 5) {
+            this.sprite.play("normal-player-run", true);
+        } else {
+            this.sprite.play("normal-player-idle", true);
+        }
+
+        if (Math.abs(velocityX) < Math.abs(this.lastVelocityX)) {
+            this.sprite.play("normal-player-stopping", true);
+        }
+
+        this.lastVelocityX = velocityX;
+
+        // Switching between worlds
         if (Phaser.Input.Keyboard.JustDown(this.Button3)) {
             switch (this.scene.timeState) {
                 case "apocalyptic":
