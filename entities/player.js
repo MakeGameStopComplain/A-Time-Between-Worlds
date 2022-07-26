@@ -33,7 +33,7 @@ class Player extends Entity {
             velocityX += speed;
             this.sprite.flipX = true;
         }
-        if ((this.cursors.up.isDown || this.Button2.isDown) && 
+        if ((Phaser.Input.Keyboard.JustDown(this.cursors.up) || Phaser.Input.Keyboard.JustDown(this.Button2)) && 
             this.sprite.body.blocked.down) 
         {
             velocityY = -1000;
