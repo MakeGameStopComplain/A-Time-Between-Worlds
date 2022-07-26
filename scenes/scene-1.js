@@ -16,6 +16,7 @@ class Scene1 extends Phaser.Scene {
         this.load.tilemapCSV("testmap", "tilemaps/testlvl.csv");
         this.load.tilemapCSV("testmap2", "tilemaps/testlvl apocalyptic.csv");
         this.load.image("world1tiles", "image/blocksnormal.png");
+        this.load.image("world1tiles-purple", "image/blockspurple.png");
         this.load.spritesheet("bg1", "image/parallax back 1.png", { frameWidth: 128, frameHeight: 96 });
         this.load.spritesheet("bg2", "image/parallax back 2.png", { frameWidth: 128, frameHeight: 96 });
     }
@@ -112,7 +113,7 @@ class Scene1 extends Phaser.Scene {
                 break;
             case "apocalyptic":
                 this.baseTilemap = this.make.tilemap({ key: "testmap2", tileWidth: 32, tileHeight: 32 });
-                var world1tiles = this.baseTilemap.addTilesetImage("world1tileset", "world1tiles");
+                var world1tiles = this.baseTilemap.addTilesetImage("world1tileset", "world1tiles-purple");
                 this.layer1 = this.baseTilemap.createLayer(0, world1tiles, 0, 0);
                 this.layer1.scale = gameScale / 16;
                 this.tileCollider = this.physics.add.collider(this.player.sprite, this.layer1)
