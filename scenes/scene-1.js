@@ -12,7 +12,7 @@ class Scene1 extends Phaser.Scene {
 
     preload() {
         this.load.spritesheet("normal-player", "image/normal-player.png", { frameWidth: 32, frameHeight: 32 });
-        this.load.spritesheet("apocalyptic-player", "image/apocalyptic-player", { frameWidth: 32, frameHeight: 32 });
+        this.load.spritesheet("apocalyptic-player", "image/apocalyptic-player.png", { frameWidth: 32, frameHeight: 32 });
         this.load.tilemapCSV("testmap", "tilemaps/testlvl.csv");
         this.load.tilemapCSV("testmap2", "tilemaps/testlvl apocalyptic.csv");
         this.load.image("world1tiles", "image/world1tileset.png");
@@ -107,6 +107,8 @@ class Scene1 extends Phaser.Scene {
                 this.background3.setTexture("bg1", 2);
                 this.background4.setTexture("bg1", 1);
                 this.background5.setTexture("bg1", 0);
+
+                this.player.sprite.tint = 0xffffff;
                 break;
             case "apocalyptic":
                 this.baseTilemap = this.make.tilemap({ key: "testmap2", tileWidth: 32, tileHeight: 32 });
@@ -121,6 +123,8 @@ class Scene1 extends Phaser.Scene {
                 this.background3.setTexture("bg2", 2);
                 this.background4.setTexture("bg2", 1);
                 this.background5.setTexture("bg2", 0);
+
+                this.player.sprite.tint = 0xee66ff; // I couldn't think of a way to seamlessly switch spritesheets, so this is a temporary solution to that.
                 break;
         }
     }
