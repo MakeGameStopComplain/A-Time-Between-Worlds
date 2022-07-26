@@ -15,7 +15,7 @@ class Scene1 extends Phaser.Scene {
         this.load.spritesheet("apocalyptic-player", "image/apocalyptic-player.png", { frameWidth: 32, frameHeight: 32 });
         this.load.tilemapCSV("testmap", "tilemaps/testlvl.csv");
         this.load.tilemapCSV("testmap2", "tilemaps/testlvl apocalyptic.csv");
-        this.load.image("world1tiles", "image/world1tileset.png");
+        this.load.image("world1tiles", "image/blocksnormal.png");
         this.load.spritesheet("bg1", "image/parallax back 1.png", { frameWidth: 128, frameHeight: 96 });
         this.load.spritesheet("bg2", "image/parallax back 2.png", { frameWidth: 128, frameHeight: 96 });
     }
