@@ -17,6 +17,7 @@ class Scene1 extends Phaser.Scene {
         this.load.tilemapCSV("testmap2", "tilemaps/testlvl apocalyptic.csv");
         this.load.image("world1tiles", "image/world1tileset.png");
         this.load.spritesheet("bg1", "image/parallax back 1.png", { frameWidth: 128, frameHeight: 96 });
+        this.load.spritesheet("bg2", "image/parallax back 2.png", { frameWidth: 128, frameHeight: 96 });
     }
 
     create() {
@@ -100,6 +101,12 @@ class Scene1 extends Phaser.Scene {
                 this.layer1.scale = gameScale / 16;
                 this.tileCollider = this.physics.add.collider(this.player.sprite, this.layer1)
                 this.layer1.setCollisionBetween(1, 4);
+
+                this.background1.setTexture("bg1", 4);
+                this.background2.setTexture("bg1", 3);
+                this.background3.setTexture("bg1", 2);
+                this.background4.setTexture("bg1", 1);
+                this.background5.setTexture("bg1", 0);
                 break;
             case "apocalyptic":
                 this.baseTilemap = this.make.tilemap({ key: "testmap2", tileWidth: 32, tileHeight: 32 });
@@ -108,6 +115,12 @@ class Scene1 extends Phaser.Scene {
                 this.layer1.scale = gameScale / 16;
                 this.tileCollider = this.physics.add.collider(this.player.sprite, this.layer1)
                 this.layer1.setCollisionBetween(1, 4);
+
+                this.background1.setTexture("bg2", 4);
+                this.background2.setTexture("bg2", 3);
+                this.background3.setTexture("bg2", 2);
+                this.background4.setTexture("bg2", 1);
+                this.background5.setTexture("bg2", 0);
                 break;
         }
     }
