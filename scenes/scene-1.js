@@ -2,6 +2,7 @@ class Scene1 extends Phaser.Scene {
 
     // We could eventually get the length from the length of a csv row
     levelLength = 32;
+    levelHeight = 16;
 
     constructor() {
         super("scene-1");
@@ -57,16 +58,14 @@ class Scene1 extends Phaser.Scene {
         this.layer1.setCollisionBetween(1, 4);
 
         // Camera
-        this.physics.world.setBounds(0, 0, gameWidth * this.levelLength / 16, gameHeight);
-        this.cameras.main.setBounds(0, 0, gameWidth * this.levelLength / 16, gameHeight);
+        this.physics.world.setBounds(0, 0, gameWidth * this.levelLength / 16, gameHeight * this.levelHeight / 9);
+        this.cameras.main.setBounds(0, 0, gameWidth * this.levelLength / 16, gameHeight * this.levelHeight / 9);
         this.cameras.main.startFollow(this.player.sprite);
 
     }
 
     update() {
         this.handler.update();
-        // this.background2.tilePositionY = this.cameras.main.scrollY * .3;
-
     }
     
     onTimeStateChange() {
