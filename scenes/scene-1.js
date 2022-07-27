@@ -20,7 +20,10 @@ class Scene1 extends Phaser.Scene {
         this.load.spritesheet("bg1", "image/parallax back 1.png", { frameWidth: 128 * 6, frameHeight: 96 * 6 });
         this.load.spritesheet("bg2", "image/parallax back 2.png", { frameWidth: 128 * 6, frameHeight: 96 * 6 });
         this.load.image("background5-normal", "image/tree n road.png");
+        this.load.image("background5-apocalyptic", "image/tree n road apocalyptic.png");
         this.load.spritesheet("spikes", "image/spikes.png", { frameWidth: 32, frameHeight: 32 });
+        this.load.spritesheet("pressure plate", "image/button.png", { frameWidth: 32, frameHeight: 32 });
+
     }
 
     create() {
@@ -53,6 +56,7 @@ class Scene1 extends Phaser.Scene {
         this.player = new Player(this.handler, this, "", "player");
         this.handler.addEntity(this.player);
         this.playerCollider = this.physics.add.collider(this.player.sprite, this.layer1);
+        this.player.sprite.depth = 2;
 
         // Camera
         this.physics.world.setBounds(0, 0, gameWidth * this.levelLength / 16, gameHeight * this.levelHeight / 9);
@@ -65,6 +69,7 @@ class Scene1 extends Phaser.Scene {
         this.handler.addEntity(this.box);
         this.boxCollider1 = this.physics.add.collider(this.box.sprite, this.layer1);
         this.boxCollider2 = this.physics.add.collider(this.box.sprite, this.player.sprite);
+        this.box.sprite.depth = 3;
 
         // Makes entities for each special tile
         this.doors = [];
@@ -75,12 +80,14 @@ class Scene1 extends Phaser.Scene {
                 spikes.sprite.x = (tile.x + 0.5) * tileSize * (gameScale / 16);
                 spikes.sprite.y = (tile.y + 0.5) * tileSize * (gameScale / 16);
                 this.handler.addEntity(spikes);
+                spikes.sprite.depth = 3;
             } else if (tile.index === 24) {
                 let pressurePlate = new PressurePlate(this.handler, this, "pressure plate", "pressure plate", this.box, this.player);
                 pressurePlate.sprite.x = (tile.x + 0.5) * tileSize * (gameScale / 16);
                 pressurePlate.sprite.y = (tile.y + 0.5) * tileSize * (gameScale / 16);
                 this.handler.addEntity(pressurePlate);
                 this.pressurePlates.push(pressurePlate);
+                pressurePlate.sprite.depth = 1;
             } else if (tile.index === 23) {
                 let door = new Door(this.handler, this, "door", "door", this.player);
                 door.sprite.x = (tile.x + 0.5) * tileSize * (gameScale / 16);
@@ -88,6 +95,7 @@ class Scene1 extends Phaser.Scene {
                 this.handler.addEntity(door);
                 let doorAndCollider = [door, this.physics.add.collider(door.sprite, this.player.sprite)];
                 this.doors.push(doorAndCollider);
+                door.sprite.depth = 3;
             }
         });
 
@@ -214,7 +222,7 @@ class Scene1 extends Phaser.Scene {
                 this.background2.setTexture("bg2", 3);
                 this.background3.setTexture("bg2", 2);
                 this.background4.setTexture("bg2", 1);
-                this.background5.setTexture("bg2", 0);
+                this.background5.setTexture("background5-apocalyptic");
 
                 this.player.sprite.tint = 0xee66ff; // I couldn't think of a way to seamlessly switch spritesheets, so this is a temporary solution to that.
                         
