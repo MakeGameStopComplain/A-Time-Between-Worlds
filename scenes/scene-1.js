@@ -17,31 +17,26 @@ class Scene1 extends Phaser.Scene {
         this.load.tilemapCSV("testmap2", "tilemaps/testlvl apocalyptic.csv");
         this.load.image("world1tiles", "image/blocksnormal.png");
         this.load.image("world1tiles-purple", "image/blockspurple.png");
-        this.load.spritesheet("bg1", "image/parallax back 1.png", { frameWidth: 128, frameHeight: 96 });
-        this.load.spritesheet("bg2", "image/parallax back 2.png", { frameWidth: 128, frameHeight: 96 });
+        this.load.spritesheet("bg1", "image/parallax back 1.png", { frameWidth: 128 * 6, frameHeight: 96 * 6 });
+        this.load.spritesheet("bg2", "image/parallax back 2.png", { frameWidth: 128 * 6, frameHeight: 96 * 6 });
     }
 
     create() {
         // Background
         this.background1 = this.add.tileSprite(0, 0, gameWidth, gameHeight, "bg1", 4);
-        this.background1.scale = 5.625;
         this.background1.setOrigin(0, 0);
         this.background1.setScrollFactor(0);
         this.background1.tilePositionX = this.cameras.scrollX * .3;  // I have no clue why, but without this line the sky has a weird artifact
         this.background2 = this.add.tileSprite(0, 0, gameWidth, gameHeight, "bg1", 3);
-        this.background2.scale = 5.625;
         this.background2.setOrigin(0, 0);
         this.background2.setScrollFactor(0);  // .1
         this.background3 = this.add.tileSprite(0, 0, gameWidth, gameHeight, "bg1", 2);
-        this.background3.scale = 5.625;
         this.background3.setOrigin(0, 0);
         this.background3.setScrollFactor(0);  // .15
         this.background4 = this.add.tileSprite(0, 0, gameWidth, gameHeight, "bg1", 1);
-        this.background4.scale = 5.625;
         this.background4.setOrigin(0, 0);
         this.background4.setScrollFactor(0);  // .185
         this.background5 = this.add.tileSprite(0, 0, gameWidth, gameHeight, "bg1", 0);
-        this.background5.scale = 5.625;
         this.background5.setOrigin(0, 0);
         this.background5.setScrollFactor(0);  // .25
 
