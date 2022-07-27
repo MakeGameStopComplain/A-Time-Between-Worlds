@@ -65,8 +65,8 @@ class Scene1 extends Phaser.Scene {
         this.layer1.forEachTile((tile) => {
             if (tile.index === 25) {
                 const tmp = new Spikes(this.handler, this, "", "spikes");
-                tmp.sprite.x = tile.x * gameScale;
-                tmp.sprite.y = tile.y * gameScale;
+                tmp.sprite.x = (tile.x + 0.5) * tileSize * (gameScale / 16);
+                tmp.sprite.y = (tile.y + 0.5) * tileSize * (gameScale / 16);
                 this.handler.addEntity(tmp);
             }
         });

@@ -1,6 +1,7 @@
 class Spikes extends Entity {
     constructor(handler, scene, spriteName, entityName) {
         super(handler, scene, spriteName, entityName);
+        this.sprite.scale = gameScale / 16;
         this.scene.physics.add.overlap(this.scene.player.sprite, this.sprite, this.onHit, null, this);
     }
 

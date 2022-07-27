@@ -12,6 +12,8 @@ class Player extends Entity {
         this.sprite.setGravityY(2000);
         this.sprite.scale = gameScale / 16;
 
+        this.sprite.body.setSize(16, 16).setOffset(0, 16);
+
         this.lastVelocityX = 0
     }  
 
@@ -23,6 +25,17 @@ class Player extends Entity {
         let velocityY = this.sprite.body.velocity.y;
         let accelerating = false;
 
+        if (this.sprite.body.blocked.down) {
+            this.sprite.rotation = 0;
+        } else  {
+            const speed = Math.abs(this.sprite.body.velocity.y) / 10000;
+            if (this.sprite.flipX) {
+                this.sprite.rotation += speed;
+            } else  {
+                this.sprite.rotation -= speed;
+            }
+        }
+        
         const clamp = (x, a, b) => {
             return Math.max(Math.min(x, a), b);
         }
