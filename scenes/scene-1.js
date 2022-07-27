@@ -53,23 +53,28 @@ class Scene1 extends Phaser.Scene {
         // Player Setup
         this.player = new Player(this.handler, this, "", "player");
         this.handler.addEntity(this.player);
-        this.tileCollider = this.physics.add.collider(this.player.sprite, this.layer1);
+        this.playerCollider = this.physics.add.collider(this.player.sprite, this.layer1);
 
+        // Boxes and Pressure Plates
         this.box = new Box(this.handler, this, "", "box");
         this.box.sprite.x = 200;
         this.handler.addEntity(this.box);
-        this.tileCollider = this.physics.add.collider(this.box.sprite, this.layer1);
-        this.tileCollider = this.physics.add.collider(this.box.sprite, this.player.sprite);
+        this.boxCollider1 = this.physics.add.collider(this.box.sprite, this.layer1);
+        this.boxCollider2 = this.physics.add.collider(this.box.sprite, this.player.sprite);
+        this.pressurePlate = new PressurePlate(this.handler, this, "", "box", this.box, this.player);
+        this.pressurePlate.sprite.x = 700;
+        this.handler.addEntity(this.pressurePlate);
+        this.pressurePlateCollider = this.physics.add.collider(this.pressurePlate.sprite, this.layer1);
 
         // Spikes
-        this.layer1.forEachTile((tile) => {
-            if (tile.index === 25) {
-                const tmp = new Spikes(this.handler, this, "", "spikes");
-                tmp.sprite.x = (tile.x + 0.5) * tileSize * (gameScale / 16);
-                tmp.sprite.y = (tile.y + 0.5) * tileSize * (gameScale / 16);
-                this.handler.addEntity(tmp);
-            }
-        });
+        // this.layer1.forEachTile((tile) => {
+        //     if (tile.index === 25) {
+        //         const tmp = new Spikes(this.handler, this, "", "spikes");
+        //         tmp.sprite.x = (tile.x + 0.5) * tileSize * (gameScale / 16);
+        //         tmp.sprite.y = (tile.y + 0.5) * tileSize * (gameScale / 16);
+        //         this.handler.addEntity(tmp);
+        //     }
+        // });
 
         // Camera
         this.physics.world.setBounds(0, 0, gameWidth * this.levelLength / 16, gameHeight * this.levelHeight / 9);
@@ -130,14 +135,22 @@ class Scene1 extends Phaser.Scene {
         console.log(this.timeState);
         
         this.baseTilemap.destroy();
-        this.physics.world.removeCollider(this.tileCollider);
+        this.physics.world.removeCollider(this.playerCollider);
+        this.physics.world.removeCollider(this.boxCollider1);
+        this.physics.world.removeCollider(this.boxCollider2);
+        this.physics.world.removeCollider(this.pressurePlateCollider);
+
         switch (this.timeState) {
             case "normal":
                 this.baseTilemap = this.make.tilemap({ key: "testmap", tileWidth: 32, tileHeight: 32 });
                 var world1tiles = this.baseTilemap.addTilesetImage("world1tileset", "world1tiles");
                 this.layer1 = this.baseTilemap.createLayer(0, world1tiles, 0, 0);
                 this.layer1.scale = gameScale / 16;
-                this.tileCollider = this.physics.add.collider(this.player.sprite, this.layer1)
+                this.playerCollider = this.physics.add.collider(this.player.sprite, this.layer1);
+                this.boxCollider1 = this.physics.add.collider(this.box.sprite, this.layer1);
+                this.boxCollider2 = this.physics.add.collider(this.box.sprite, this.player.sprite);
+                this.pressurePlateCollider = this.physics.add.collider(this.pressurePlate.sprite, this.layer1);
+
                 this.layer1.setCollisionBetween(1, 4);
 
                 this.background1.setTexture("bg1", 4);
@@ -153,7 +166,11 @@ class Scene1 extends Phaser.Scene {
                 var world1tiles = this.baseTilemap.addTilesetImage("world1tileset", "world1tiles-purple");
                 this.layer1 = this.baseTilemap.createLayer(0, world1tiles, 0, 0);
                 this.layer1.scale = gameScale / 16;
-                this.tileCollider = this.physics.add.collider(this.player.sprite, this.layer1)
+                this.playerCollider = this.physics.add.collider(this.player.sprite, this.layer1);
+                this.boxCollider1 = this.physics.add.collider(this.box.sprite, this.layer1);
+                this.boxCollider2 = this.physics.add.collider(this.box.sprite, this.player.sprite);
+                this.pressurePlateCollider = this.physics.add.collider(this.pressurePlate.sprite, this.layer1);
+
                 this.layer1.setCollisionBetween(1, 4);
 
                 this.background1.setTexture("bg2", 4);
