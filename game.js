@@ -10,7 +10,7 @@ window.onload = function() {
         physics: {
             default: "arcade",
             arcade: {
-                gravity: { y: 555, x: 0 },
+                gravity: { y: 0, x: 0 },
                 debug: false,
                 fps: 60
             }

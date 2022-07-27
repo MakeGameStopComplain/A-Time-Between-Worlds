@@ -19,15 +19,16 @@ class Scene1 extends Phaser.Scene {
         this.load.image("world1tiles-purple", "image/blockspurple.png");
         this.load.spritesheet("bg1", "image/parallax back 1.png", { frameWidth: 128 * 6, frameHeight: 96 * 6 });
         this.load.spritesheet("bg2", "image/parallax back 2.png", { frameWidth: 128 * 6, frameHeight: 96 * 6 });
-        this.load.image("background5", "image/tree n road.png");
+        this.load.image("background5-normal", "image/tree n road.png");
     }
 
     create() {
+        this.physics.world.setFPS(60);
+        
         // Background
         this.background1 = this.add.tileSprite(0, 0, gameWidth, gameHeight, "bg1", 4);
         this.background1.setOrigin(0, 0);
         this.background1.setScrollFactor(0);
-        this.background1.tilePositionX = this.cameras.scrollX * .3;  // I have no clue why, but without this line the sky has a weird artifact
         this.background2 = this.add.tileSprite(0, 0, gameWidth, gameHeight, "bg1", 3);
         this.background2.setOrigin(0, 0);
         this.background2.setScrollFactor(0);  // .1
@@ -37,7 +38,7 @@ class Scene1 extends Phaser.Scene {
         this.background4 = this.add.tileSprite(0, 0, gameWidth, gameHeight, "bg1", 1);
         this.background4.setOrigin(0, 0);
         this.background4.setScrollFactor(0);  // .185
-        this.background5 = this.add.tileSprite(0, 0, gameWidth, gameHeight, "background5");
+        this.background5 = this.add.tileSprite(0, 0, gameWidth, gameHeight, "background5-normal");
         this.background5.scale = 6;
         this.background5.setOrigin(0, 0);
         this.background5.setScrollFactor(0);  // .25
@@ -51,8 +52,18 @@ class Scene1 extends Phaser.Scene {
         // Player Setup
         this.player = new Player(this.handler, this, "", "player");
         this.handler.addEntity(this.player);
-        this.tileCollider = this.physics.add.collider(this.player.sprite, this.layer1)
+        this.tileCollider = this.physics.add.collider(this.player.sprite, this.layer1);
         this.layer1.setCollisionBetween(1, 4);
+
+        // SPIKES
+        this.layer1.forEachTile((tile) => {
+            if (tile.index == 25) {
+                const tmp = new Spikes(this.handler, this, "", "spikes");
+                tmp.sprite.x = tile.x * gameScale;
+                tmp.sprite.y = tile.y * gameScale;
+                this.handler.addEntity(tmp);
+            }
+        });
 
         // Camera
         this.physics.world.setBounds(0, 0, gameWidth * this.levelLength / 16, gameHeight * this.levelHeight / 9);
@@ -100,7 +111,13 @@ class Scene1 extends Phaser.Scene {
         this.background5.tilePositionY = cameraY / 20;
 
         // Changes gravity
-        // if (this.player.sprite.x > 300 && this.player.sprite.x < 300)
+        if (this.player.sprite.x > 300 && this.player.sprite.x < 1000 && this.timeState == "apocalyptic") {
+            this.player.sprite.setGravityY(-30);
+        } else if (this.timeState == "apocalyptic") {
+            this.player.sprite.setGravityY(1000);
+        } else {
+            this.player.sprite.setGravityY(2000);
+        }
     }
     
     onTimeStateChange() {
@@ -121,7 +138,7 @@ class Scene1 extends Phaser.Scene {
                 this.background2.setTexture("bg1", 3);
                 this.background3.setTexture("bg1", 2);
                 this.background4.setTexture("bg1", 1);
-                this.background5.setTexture("bg1", 0);
+                this.background5.setTexture("background5-normal");
 
                 this.player.sprite.tint = 0xffffff;
                 break;

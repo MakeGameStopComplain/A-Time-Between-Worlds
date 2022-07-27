@@ -17,9 +17,11 @@ class Player extends Entity {
 
     update() {
         const speed = 100;
-        const velocityCap = 1000;
+        const velocityCapX = 1000;
+        const velocityCapY = 850;
         let velocityX = this.sprite.body.velocity.x;
         let velocityY = this.sprite.body.velocity.y;
+        let accelerating = false;
 
         const clamp = (x, a, b) => {
             return Math.max(Math.min(x, a), b);
@@ -28,10 +30,12 @@ class Player extends Entity {
         if (this.cursors.left.isDown) {
             velocityX -= speed;
             this.sprite.flipX = false;
+            accelerating = true;
         }
         if (this.cursors.right.isDown) {
             velocityX += speed;
             this.sprite.flipX = true;
+            accelerating = true;
         }
         if ((Phaser.Input.Keyboard.JustDown(this.cursors.up) || Phaser.Input.Keyboard.JustDown(this.Button2)) && 
             this.sprite.body.blocked.down) 
@@ -39,7 +43,7 @@ class Player extends Entity {
             velocityY = -1000;
         }
 
-        this.sprite.setVelocity(clamp(velocityX, velocityCap, -velocityCap), clamp(velocityY, velocityCap, -velocityCap));
+        this.sprite.setVelocity(clamp(velocityX, velocityCapX, -velocityCapX), clamp(velocityY, velocityCapY, -velocityCapY));
 
         if (Math.abs(velocityX) > 5) {
             this.sprite.play("normal-player-run", true);
@@ -47,22 +51,20 @@ class Player extends Entity {
             this.sprite.play("normal-player-idle", true);
         }
 
-        if (Math.abs(velocityX) < Math.abs(this.lastVelocityX)) {
+        if (!accelerating && velocityX != 0) {
             this.sprite.play("normal-player-stopping", true);
         }
-
-        this.lastVelocityX = velocityX;
 
         // Switching between worlds
         if (Phaser.Input.Keyboard.JustDown(this.Button3)) {
             switch (this.scene.timeState) {
                 case "apocalyptic":
                     this.scene.timeState = "normal";
-                    // this.sprite.setGravityY(2000);
+                    this.sprite.setGravityY(2000);
                     break;
                 case "normal":
                     this.scene.timeState = "apocalyptic";
-                    // this.sprite.setGravityY(1000);
+                    this.sprite.setGravityY(1000);
                     break;
             }
             this.scene.onTimeStateChange();
