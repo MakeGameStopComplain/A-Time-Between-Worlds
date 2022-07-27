@@ -19,6 +19,7 @@ class Scene1 extends Phaser.Scene {
         this.load.image("world1tiles-purple", "image/blockspurple.png");
         this.load.spritesheet("bg1", "image/parallax back 1.png", { frameWidth: 128 * 6, frameHeight: 96 * 6 });
         this.load.spritesheet("bg2", "image/parallax back 2.png", { frameWidth: 128 * 6, frameHeight: 96 * 6 });
+        this.load.image("background5", "image/tree n road.png");
     }
 
     create() {
@@ -36,7 +37,8 @@ class Scene1 extends Phaser.Scene {
         this.background4 = this.add.tileSprite(0, 0, gameWidth, gameHeight, "bg1", 1);
         this.background4.setOrigin(0, 0);
         this.background4.setScrollFactor(0);  // .185
-        this.background5 = this.add.tileSprite(0, 0, gameWidth, gameHeight, "bg1", 0);
+        this.background5 = this.add.tileSprite(0, 0, gameWidth, gameHeight, "background5");
+        this.background5.scale = 6;
         this.background5.setOrigin(0, 0);
         this.background5.setScrollFactor(0);  // .25
 
@@ -84,7 +86,7 @@ class Scene1 extends Phaser.Scene {
         this.handler.update();
 
         // Makes the clouds move
-        this.background2.tilePositionX += .02;
+        this.background2.tilePositionX += .2;
 
         // Does parallax scrolling
         let cameraX = this.cameras.main.scrollX;
@@ -94,7 +96,7 @@ class Scene1 extends Phaser.Scene {
 
         let cameraY = this.cameras.main.scrollY;
         this.background3.tilePositionY = cameraY / 60;
-        this.background4.tilePositionY = cameraY / 40;
+        this.background4.tilePositionY = cameraY / 20;
         this.background5.tilePositionY = cameraY / 20;
     }
     
