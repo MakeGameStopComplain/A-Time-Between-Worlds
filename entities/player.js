@@ -58,9 +58,11 @@ class Player extends Entity {
             switch (this.scene.timeState) {
                 case "apocalyptic":
                     this.scene.timeState = "normal";
+                    // this.sprite.setGravityY(2000);
                     break;
                 case "normal":
                     this.scene.timeState = "apocalyptic";
+                    // this.sprite.setGravityY(1000);
                     break;
             }
             this.scene.onTimeStateChange();

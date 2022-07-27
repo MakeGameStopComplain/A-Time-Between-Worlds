@@ -90,14 +90,17 @@ class Scene1 extends Phaser.Scene {
 
         // Does parallax scrolling
         let cameraX = this.cameras.main.scrollX;
-        this.background3.tilePositionX = cameraX / 60;
-        this.background4.tilePositionX = cameraX / 40;
+        this.background3.tilePositionX = cameraX / 30;
+        this.background4.tilePositionX = cameraX / 15;
         this.background5.tilePositionX = cameraX / 20;
 
         let cameraY = this.cameras.main.scrollY;
-        this.background3.tilePositionY = cameraY / 60;
+        this.background3.tilePositionY = cameraY / 30;
         this.background4.tilePositionY = cameraY / 20;
         this.background5.tilePositionY = cameraY / 20;
+
+        // Changes gravity
+        // if (this.player.sprite.x > 300 && this.player.sprite.x < 300)
     }
     
     onTimeStateChange() {
