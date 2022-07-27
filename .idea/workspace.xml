@@ -2,9 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="efdb1173-e3c1-4006-a642-1f3242c037a7" name="Changes" comment="Refined background">
+      <change afterPath="$PROJECT_DIR$/entities/door.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/entities/pressure-plate.js" beforeDir="false" afterPath="$PROJECT_DIR$/entities/pressure-plate.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/index.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/scenes/scene-1.js" beforeDir="false" afterPath="$PROJECT_DIR$/scenes/scene-1.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tilemaps/testlvl.csv" beforeDir="false" afterPath="$PROJECT_DIR$/tilemaps/testlvl.csv" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -50,7 +53,7 @@
       <workItem from="1658770716808" duration="1160000" />
       <workItem from="1658803355142" duration="2543000" />
       <workItem from="1658815296385" duration="8907000" />
-      <workItem from="1658889861776" duration="3973000" />
+      <workItem from="1658889861776" duration="8855000" />
     </task>
     <task id="LOCAL-00001" summary="Added world switching">
       <created>1658771675935</created>

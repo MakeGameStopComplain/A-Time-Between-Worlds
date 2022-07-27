@@ -47,38 +47,49 @@ class Scene1 extends Phaser.Scene {
         var world1tiles = this.baseTilemap.addTilesetImage("world1tileset", "world1tiles");
         this.layer1 = this.baseTilemap.createLayer(0, world1tiles, 0, 0);
         this.layer1.scale = gameScale / 16;
-        this.layer1.setCollisionBetween(1, 4);
+        this.layer1.setCollisionBetween(1, 8);
 
         // Player Setup
         this.player = new Player(this.handler, this, "", "player");
         this.handler.addEntity(this.player);
         this.playerCollider = this.physics.add.collider(this.player.sprite, this.layer1);
 
-        // Boxes and Pressure Plates
+        // Camera
+        this.physics.world.setBounds(0, 0, gameWidth * this.levelLength / 16, gameHeight * this.levelHeight / 9);
+        this.cameras.main.setBounds(0, 0, gameWidth * this.levelLength / 16, gameHeight * this.levelHeight / 9);
+        this.cameras.main.startFollow(this.player.sprite);
+
+        // Boxes
         this.box = new Box(this.handler, this, "", "box");
         this.box.sprite.x = 200;
         this.handler.addEntity(this.box);
         this.boxCollider1 = this.physics.add.collider(this.box.sprite, this.layer1);
         this.boxCollider2 = this.physics.add.collider(this.box.sprite, this.player.sprite);
-        this.pressurePlate = new PressurePlate(this.handler, this, "", "box", this.box, this.player);
-        this.pressurePlate.sprite.x = 700;
-        this.handler.addEntity(this.pressurePlate);
-        this.pressurePlateCollider = this.physics.add.collider(this.pressurePlate.sprite, this.layer1);
 
-        // Spikes
+        // Makes entities for each special tile
+        this.doors = [];
+        this.pressurePlates = [];
         this.layer1.forEachTile((tile) => {
             if (tile.index === 25) {
-                const tmp = new Spikes(this.handler, this, "spikes", "spikes");
-                tmp.sprite.x = (tile.x + 0.5) * tileSize * (gameScale / 16);
-                tmp.sprite.y = (tile.y + 0.5) * tileSize * (gameScale / 16);
-                this.handler.addEntity(tmp);
+                let spikes = new Spikes(this.handler, this, "spikes", "spikes");
+                spikes.sprite.x = (tile.x + 0.5) * tileSize * (gameScale / 16);
+                spikes.sprite.y = (tile.y + 0.5) * tileSize * (gameScale / 16);
+                this.handler.addEntity(spikes);
+            } else if (tile.index === 24) {
+                let pressurePlate = new PressurePlate(this.handler, this, "pressure plate", "pressure plate", this.box, this.player);
+                pressurePlate.sprite.x = (tile.x + 0.5) * tileSize * (gameScale / 16);
+                pressurePlate.sprite.y = (tile.y + 0.5) * tileSize * (gameScale / 16);
+                this.handler.addEntity(pressurePlate);
+                this.pressurePlates.push(pressurePlate);
+            } else if (tile.index === 23) {
+                let door = new Door(this.handler, this, "door", "door", this.player);
+                door.sprite.x = (tile.x + 0.5) * tileSize * (gameScale / 16);
+                door.sprite.y = (tile.y + 0.5) * tileSize * (gameScale / 16);
+                this.handler.addEntity(door);
+                let doorAndCollider = [door, this.physics.add.collider(door.sprite, this.player.sprite)];
+                this.doors.push(doorAndCollider);
             }
         });
-
-        // Camera
-        this.physics.world.setBounds(0, 0, gameWidth * this.levelLength / 16, gameHeight * this.levelHeight / 9);
-        this.cameras.main.setBounds(0, 0, gameWidth * this.levelLength / 16, gameHeight * this.levelHeight / 9);
-        this.cameras.main.startFollow(this.player.sprite);
 
         // Animations
         this.anims.create({
@@ -128,6 +139,22 @@ class Scene1 extends Phaser.Scene {
         } else {
             this.player.sprite.setGravityY(2000);
         }
+
+        // Connects pressure plates and doors
+        if (this.pressurePlates[0].isPressed) {
+            this.doors[0][0].openDoor();
+        } else {
+            this.doors[0][0].closeDoor();
+        }
+
+        // Opens and closes doors collision
+        for (let i = 0; i < this.doors.length; i++) {
+            let door = this.doors[i][0];
+            let collider = this.doors[i][1];
+
+            collider.active = !door.isOpen;
+        }
+
     }
     
     onTimeStateChange() {
@@ -135,7 +162,11 @@ class Scene1 extends Phaser.Scene {
         this.physics.world.removeCollider(this.playerCollider);
         this.physics.world.removeCollider(this.boxCollider1);
         this.physics.world.removeCollider(this.boxCollider2);
-        this.physics.world.removeCollider(this.pressurePlateCollider);
+
+        for (let i = 0; i < this.doors.length; i++) {
+            let collider = this.doors[i][1];
+            this.physics.world.removeCollider(collider);
+        }
 
         switch (this.timeState) {
             case "normal":
@@ -146,7 +177,11 @@ class Scene1 extends Phaser.Scene {
                 this.playerCollider = this.physics.add.collider(this.player.sprite, this.layer1);
                 this.boxCollider1 = this.physics.add.collider(this.box.sprite, this.layer1);
                 this.boxCollider2 = this.physics.add.collider(this.box.sprite, this.player.sprite);
-                this.pressurePlateCollider = this.physics.add.collider(this.pressurePlate.sprite, this.layer1);
+
+                for (let i = 0; i < this.doors.length; i++) {
+                    let door = this.doors[i][0];
+                    this.doors[i][1] = this.physics.add.collider(door.sprite, this.player.sprite);
+                }
 
                 this.layer1.setCollisionBetween(1, 4);
 
@@ -167,7 +202,11 @@ class Scene1 extends Phaser.Scene {
                 this.playerCollider = this.physics.add.collider(this.player.sprite, this.layer1);
                 this.boxCollider1 = this.physics.add.collider(this.box.sprite, this.layer1);
                 this.boxCollider2 = this.physics.add.collider(this.box.sprite, this.player.sprite);
-                this.pressurePlateCollider = this.physics.add.collider(this.pressurePlate.sprite, this.layer1);
+
+                for (let i = 0; i < this.doors.length; i++) {
+                    let door = this.doors[i][0];
+                    this.doors[i][1] = this.physics.add.collider(door.sprite, this.player.sprite);
+                }
 
                 this.layer1.setCollisionBetween(1, 4);
 
