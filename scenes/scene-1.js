@@ -31,19 +31,19 @@ class Scene1 extends Phaser.Scene {
         this.background2 = this.add.tileSprite(0, 0, gameWidth, gameHeight, "bg1", 3);
         this.background2.scale = 5.625;
         this.background2.setOrigin(0, 0);
-        this.background2.setScrollFactor(.1);
+        this.background2.setScrollFactor(0);  // .1
         this.background3 = this.add.tileSprite(0, 0, gameWidth, gameHeight, "bg1", 2);
         this.background3.scale = 5.625;
         this.background3.setOrigin(0, 0);
-        this.background3.setScrollFactor(.15);
+        this.background3.setScrollFactor(0);  // .15
         this.background4 = this.add.tileSprite(0, 0, gameWidth, gameHeight, "bg1", 1);
         this.background4.scale = 5.625;
         this.background4.setOrigin(0, 0);
-        this.background4.setScrollFactor(.185);
+        this.background4.setScrollFactor(0);  // .185
         this.background5 = this.add.tileSprite(0, 0, gameWidth, gameHeight, "bg1", 0);
         this.background5.scale = 5.625;
         this.background5.setOrigin(0, 0);
-        this.background5.setScrollFactor(.25);
+        this.background5.setScrollFactor(0);  // .25
 
         // World Setup
         this.baseTilemap = this.make.tilemap({ key: "testmap", tileWidth: 32, tileHeight: 32 });
@@ -87,6 +87,20 @@ class Scene1 extends Phaser.Scene {
 
     update() {
         this.handler.update();
+
+        // Makes the clouds move
+        this.background2.tilePositionX += .02;
+
+        // Does parallax scrolling
+        let cameraX = this.cameras.main.scrollX;
+        this.background3.tilePositionX = cameraX / 60;
+        this.background4.tilePositionX = cameraX / 40;
+        this.background5.tilePositionX = cameraX / 20;
+
+        let cameraY = this.cameras.main.scrollY;
+        this.background3.tilePositionY = cameraY / 60;
+        this.background4.tilePositionY = cameraY / 40;
+        this.background5.tilePositionY = cameraY / 20;
     }
     
     onTimeStateChange() {
