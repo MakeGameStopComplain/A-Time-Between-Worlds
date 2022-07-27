@@ -6,7 +6,6 @@ class Box extends Entity {
     this.sprite.setDragX(1000);
     this.sprite.setGravityY(2000);
     this.sprite.scale = gameScale / 16;
-
   }
 
   update() {

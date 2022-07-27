@@ -20,11 +20,10 @@ class Scene1 extends Phaser.Scene {
         this.load.spritesheet("bg1", "image/parallax back 1.png", { frameWidth: 128 * 6, frameHeight: 96 * 6 });
         this.load.spritesheet("bg2", "image/parallax back 2.png", { frameWidth: 128 * 6, frameHeight: 96 * 6 });
         this.load.image("background5-normal", "image/tree n road.png");
+        this.load.spritesheet("spikes", "image/spikes.png", { frameWidth: 32, frameHeight: 32 });
     }
 
     create() {
-        this.physics.world.setFPS(60);
-        
         // Background
         this.background1 = this.add.tileSprite(0, 0, gameWidth, gameHeight, "bg1", 4);
         this.background1.setOrigin(0, 0);
@@ -67,14 +66,14 @@ class Scene1 extends Phaser.Scene {
         this.pressurePlateCollider = this.physics.add.collider(this.pressurePlate.sprite, this.layer1);
 
         // Spikes
-        // this.layer1.forEachTile((tile) => {
-        //     if (tile.index === 25) {
-        //         const tmp = new Spikes(this.handler, this, "", "spikes");
-        //         tmp.sprite.x = (tile.x + 0.5) * tileSize * (gameScale / 16);
-        //         tmp.sprite.y = (tile.y + 0.5) * tileSize * (gameScale / 16);
-        //         this.handler.addEntity(tmp);
-        //     }
-        // });
+        this.layer1.forEachTile((tile) => {
+            if (tile.index === 25) {
+                const tmp = new Spikes(this.handler, this, "spikes", "spikes");
+                tmp.sprite.x = (tile.x + 0.5) * tileSize * (gameScale / 16);
+                tmp.sprite.y = (tile.y + 0.5) * tileSize * (gameScale / 16);
+                this.handler.addEntity(tmp);
+            }
+        });
 
         // Camera
         this.physics.world.setBounds(0, 0, gameWidth * this.levelLength / 16, gameHeight * this.levelHeight / 9);
@@ -132,8 +131,6 @@ class Scene1 extends Phaser.Scene {
     }
     
     onTimeStateChange() {
-        console.log(this.timeState);
-        
         this.baseTilemap.destroy();
         this.physics.world.removeCollider(this.playerCollider);
         this.physics.world.removeCollider(this.boxCollider1);
@@ -160,6 +157,7 @@ class Scene1 extends Phaser.Scene {
                 this.background5.setTexture("background5-normal");
 
                 this.player.sprite.tint = 0xffffff;
+                
                 break;
             case "apocalyptic":
                 this.baseTilemap = this.make.tilemap({ key: "testmap2", tileWidth: 32, tileHeight: 32 });
@@ -180,6 +178,7 @@ class Scene1 extends Phaser.Scene {
                 this.background5.setTexture("bg2", 0);
 
                 this.player.sprite.tint = 0xee66ff; // I couldn't think of a way to seamlessly switch spritesheets, so this is a temporary solution to that.
+                        
                 break;
         }
     }

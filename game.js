@@ -15,6 +15,10 @@ window.onload = function() {
                 fps: 60
             }
         },
+        fps: {
+            target: 60,
+            forceSetTimeOut: true
+        },
         scene: [/*MainMenu, */Scene1],
         pixelArt: true
     };
