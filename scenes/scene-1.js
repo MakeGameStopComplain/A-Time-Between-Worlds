@@ -26,6 +26,8 @@ class Scene1 extends Phaser.Scene {
         this.load.spritesheet("pressure plate purple", "image/button purple.png", { frameWidth: 32, frameHeight: 32 });
         this.load.spritesheet("door", "image/door normal.png", { frameWidth: 32, frameHeight: 32 });
         this.load.spritesheet("door purple", "image/door purple.png", { frameWidth: 32, frameHeight: 32 });
+        this.load.image("box", "image/pushbox.png");
+        this.load.image("box purple", "image/pushbox-purple.png");
     }
 
     create() {
@@ -66,7 +68,7 @@ class Scene1 extends Phaser.Scene {
         this.cameras.main.startFollow(this.player.sprite);
 
         // Boxes
-        this.box = new Box(this.handler, this, "", "box");
+        this.box = new Box(this.handler, this, "box", "box");
         this.box.sprite.x = 200;
         this.handler.addEntity(this.box);
         this.boxCollider1 = this.physics.add.collider(this.box.sprite, this.layer1);
@@ -97,7 +99,7 @@ class Scene1 extends Phaser.Scene {
                 this.handler.addEntity(door);
                 let doorAndCollider = [door, this.physics.add.collider(door.sprite, this.player.sprite)];
                 this.doors.push(doorAndCollider);
-                door.sprite.depth = 3;
+                door.sprite.depth = 1;
             }
         });
 
@@ -200,6 +202,7 @@ class Scene1 extends Phaser.Scene {
                 this.background3.setTexture("bg1", 2);
                 this.background4.setTexture("bg1", 1);
                 this.background5.setTexture("background5-normal");
+                this.box.sprite.setTexture("box");
 
                 this.player.sprite.tint = 0xffffff;
                 
@@ -225,6 +228,7 @@ class Scene1 extends Phaser.Scene {
                 this.background3.setTexture("bg2", 2);
                 this.background4.setTexture("bg2", 1);
                 this.background5.setTexture("background5-apocalyptic");
+                this.box.sprite.setTexture("box purple");
 
                 this.player.sprite.tint = 0xee66ff; // I couldn't think of a way to seamlessly switch spritesheets, so this is a temporary solution to that.
                         
