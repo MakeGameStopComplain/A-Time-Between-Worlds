@@ -32,6 +32,11 @@ class Scene1 extends Phaser.Scene {
         this.load.spritesheet("fire", "image/fire.png", { frameWidth: 32, frameHeight: 32 });
         this.load.audio("normalmusic", "muzak/nice_song.mp3");
         this.load.audio("apocmusic", "muzak/scary_song.mp3");
+        this.load.audio("coinsound", "sound/coin.wav");
+        this.load.audio("damagesound", "sound/damage.wav");
+        this.load.audio("explosionsound", "sound/explosion.wav");
+        this.load.audio("jumpsound", "sound/jump.wav");
+        this.load.audio("selectsound", "sound/select.wav");
     }
 
     create() {

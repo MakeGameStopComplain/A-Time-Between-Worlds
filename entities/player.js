@@ -63,6 +63,7 @@ class Player extends Entity {
             this.sprite.body.blocked.down) 
         {
             velocityY = -1000;
+            this.scene.sound.add("jumpsound").play();
         }
 
         this.sprite.setVelocity(clamp(velocityX, velocityCapX, -velocityCapX), clamp(velocityY, velocityCapY, -velocityCapY));
@@ -116,6 +117,8 @@ class Player extends Entity {
             this.scene.scene.start("main-menu");
             this.handler.clearEntities();
         }
+
+        this.scene.sound.add("damagesound").play();
     }
 
 }
