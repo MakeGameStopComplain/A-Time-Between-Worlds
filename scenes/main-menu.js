@@ -4,12 +4,12 @@ class MainMenu extends Phaser.Scene {
     }
 
     preload() {
-
+        this.load.image("coverart", "image/title image-4.png.png");
     }
 
     create() {
-        /*this.coverart = this.add.image(gameWidth / 2, gameHeight / 2, "coverart");
-        // this.coverart.setScale(1.5);*/
+        this.coverart = this.add.image(gameWidth / 2, gameHeight / 2, "coverart");
+        this.coverart.setScale(gameWidth / 128);
         
         this.playbutton = this.add.sprite(gameWidth / 2, gameHeight / 2 + 123, "playbutton", 0);
         this.playbutton.setScale(0.69);
