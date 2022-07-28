@@ -103,6 +103,12 @@ class Scene1 extends Phaser.Scene {
                 let doorAndCollider = [door, this.physics.add.collider(door.sprite, this.player.sprite)];
                 this.doors.push(doorAndCollider);
                 door.sprite.depth = 1;
+            } else if (tile.index === 69) {
+                let endPortal = new Portal(this.handler, this, "portal", "portal");
+                endPortal.setCollector(this.player);
+                endPortal.sprite.x = (tile.x + 0.5) * tileSize * (gameScale / 16);
+                endPortal.sprite.y = (tile.y + 0.5) * tileSize * (gameScale / 16);
+                this.handler.addEntity(endPortal);
             }
         });
 

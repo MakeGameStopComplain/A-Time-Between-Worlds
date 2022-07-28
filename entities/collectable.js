@@ -7,7 +7,7 @@ class Collectable extends Entity {
     setCollector(collector) {
         if (collector.sprite) {
             this.collector = collector;
-            this.physics.add.overlap(collector.sprite, this.sprite, this.onPickup, null, this);
+            this.scene.physics.add.overlap(collector.sprite, this.sprite, this.onPickup, null, this);
         }
     }
 
