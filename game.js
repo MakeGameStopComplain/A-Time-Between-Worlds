@@ -21,7 +21,7 @@ window.onload = function() {
             target: fps,
             forceSetTimeOut: true
         },
-        scene: [MainMenu, Scene1, HUD],
+        scene: [MainMenu, Level1, Scene1, HUD],
         pixelArt: true
     };
     

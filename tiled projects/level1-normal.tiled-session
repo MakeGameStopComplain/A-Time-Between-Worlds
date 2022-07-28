@@ -1,0 +1,24 @@
+{
+    "Map/SizeTest": {
+        "height": 4300,
+        "width": 2
+    },
+    "activeFile": "",
+    "expandedProjectPaths": [
+    ],
+    "file.lastUsedOpenFilter": "All Files (*)",
+    "fileStates": {
+    },
+    "last.exportedFilePath": "D:/Users/jackg/Desktop/Web Dev Code/A-Time-Between-Worlds/tilemaps",
+    "last.imagePath": "D:/Users/jackg/Desktop/Web Dev Code/A-Time-Between-Worlds/image",
+    "map.height": 16,
+    "map.lastUsedExportFilter": "CSV files (*.csv)",
+    "map.lastUsedFormat": "tmx",
+    "map.width": 40,
+    "openFiles": [
+    ],
+    "project": "level1-normal.tiled-project",
+    "recentFiles": [
+    ],
+    "tileset.lastUsedFormat": "tsx"
+}

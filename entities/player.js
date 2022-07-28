@@ -17,7 +17,7 @@ class Player extends Entity {
         // Sprite Setup
         this.sprite.setCollideWorldBounds(true);
         this.sprite.setDragX(5000);
-        this.sprite.setGravityY(2000);
+        this.sprite.setGravityY(1700);
         this.sprite.scale = gameScale / 16;
         this.sprite.body.setSize(16, 16).setOffset(8, 16);
 

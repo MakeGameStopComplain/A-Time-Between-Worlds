@@ -203,7 +203,7 @@ class Scene1 extends Phaser.Scene {
         } else if (this.timeState === "apocalyptic") {
             this.player.sprite.setGravityY(1000);
         } else {
-            this.player.sprite.setGravityY(2000);
+            this.player.sprite.setGravityY(1700);
         }
 
         // Connects pressure plates and doors
