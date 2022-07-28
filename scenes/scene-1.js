@@ -56,14 +56,14 @@ class Scene1 extends Phaser.Scene {
         // World Setup
         this.baseTilemap = this.make.tilemap({ key: "testmap", tileWidth: 32, tileHeight: 32 });
         var world1tiles = this.baseTilemap.addTilesetImage("world1tileset", "world1tiles");
-        this.layer1 = this.baseTilemap.createLayer(0, world1tiles, 0, 0);
-        this.layer1.scale = gameScale / 16;
-        this.layer1.setCollisionBetween(1, 8);
+        this.tiles = this.baseTilemap.createLayer(0, world1tiles, 0, 0);
+        this.tiles.scale = gameScale / 16;
+        this.tiles.setCollisionBetween(1, 8);
 
         // Player Setup
         this.player = new Player(this.handler, this, "", "player");
         this.handler.addEntity(this.player);
-        this.playerCollider = this.physics.add.collider(this.player.sprite, this.layer1);
+        this.playerCollider = this.physics.add.collider(this.player.sprite, this.tiles);
         this.player.sprite.depth = 2;
 
         // HUD
@@ -78,14 +78,14 @@ class Scene1 extends Phaser.Scene {
         this.box = new Box(this.handler, this, "box", "box");
         this.box.sprite.x = 200;
         this.handler.addEntity(this.box);
-        this.boxCollider1 = this.physics.add.collider(this.box.sprite, this.layer1);
+        this.boxCollider1 = this.physics.add.collider(this.box.sprite, this.tiles);
         this.boxCollider2 = this.physics.add.collider(this.box.sprite, this.player.sprite);
         this.box.sprite.depth = 3;
 
         // Makes entities for each special tile
         this.doors = [];
         this.pressurePlates = [];
-        this.layer1.forEachTile((tile) => {
+        this.tiles.forEachTile((tile) => {
             if (tile.index === 25) {
                 let spikes = new Spikes(this.handler, this, "spikes", "spikes");
                 spikes.sprite.x = (tile.x + 0.5) * tileSize * (gameScale / 16);
@@ -228,10 +228,10 @@ class Scene1 extends Phaser.Scene {
             case "normal":
                 this.baseTilemap = this.make.tilemap({ key: "testmap", tileWidth: 32, tileHeight: 32 });
                 var world1tiles = this.baseTilemap.addTilesetImage("world1tileset", "world1tiles");
-                this.layer1 = this.baseTilemap.createLayer(0, world1tiles, 0, 0);
-                this.layer1.scale = gameScale / 16;
-                this.playerCollider = this.physics.add.collider(this.player.sprite, this.layer1);
-                this.boxCollider1 = this.physics.add.collider(this.box.sprite, this.layer1);
+                this.tiles = this.baseTilemap.createLayer(0, world1tiles, 0, 0);
+                this.tiles.scale = gameScale / 16;
+                this.playerCollider = this.physics.add.collider(this.player.sprite, this.tiles);
+                this.boxCollider1 = this.physics.add.collider(this.box.sprite, this.tiles);
                 this.boxCollider2 = this.physics.add.collider(this.box.sprite, this.player.sprite);
 
                 for (let i = 0; i < this.doors.length; i++) {
@@ -239,7 +239,7 @@ class Scene1 extends Phaser.Scene {
                     this.doors[i][1] = this.physics.add.collider(door.sprite, this.player.sprite);
                 }
 
-                this.layer1.setCollisionBetween(1, 4);
+                this.tiles.setCollisionBetween(1, 4);
 
                 this.background1.setTexture("bg1", 4);
                 this.background2.setTexture("bg1", 3);
@@ -256,10 +256,10 @@ class Scene1 extends Phaser.Scene {
             case "apocalyptic":
                 this.baseTilemap = this.make.tilemap({ key: "testmap2", tileWidth: 32, tileHeight: 32 });
                 var world1tiles = this.baseTilemap.addTilesetImage("world1tileset", "world1tiles-purple");
-                this.layer1 = this.baseTilemap.createLayer(0, world1tiles, 0, 0);
-                this.layer1.scale = gameScale / 16;
-                this.playerCollider = this.physics.add.collider(this.player.sprite, this.layer1);
-                this.boxCollider1 = this.physics.add.collider(this.box.sprite, this.layer1);
+                this.tiles = this.baseTilemap.createLayer(0, world1tiles, 0, 0);
+                this.tiles.scale = gameScale / 16;
+                this.playerCollider = this.physics.add.collider(this.player.sprite, this.tiles);
+                this.boxCollider1 = this.physics.add.collider(this.box.sprite, this.tiles);
                 this.boxCollider2 = this.physics.add.collider(this.box.sprite, this.player.sprite);
 
                 for (let i = 0; i < this.doors.length; i++) {
@@ -267,7 +267,7 @@ class Scene1 extends Phaser.Scene {
                     this.doors[i][1] = this.physics.add.collider(door.sprite, this.player.sprite);
                 }
 
-                this.layer1.setCollisionBetween(1, 4);
+                this.tiles.setCollisionBetween(1, 4);
 
                 this.background1.setTexture("bg2", 4);
                 this.background2.setTexture("bg2", 3);
