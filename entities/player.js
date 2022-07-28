@@ -1,9 +1,12 @@
 class Player extends Entity {
 
-    health = 5;
+    health = 3;
 
     constructor(handler, scene, spriteName, entityName) {
         super(handler, scene, spriteName, entityName);
+
+        this.handler = handler;
+        this.scene = scene;
 
         // Input
         this.Button1 = this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.Z);
@@ -105,11 +108,13 @@ class Player extends Entity {
     takeDamage() {
         if (this.iFrames === 0) {
             this.health--;
-            this.iFrames = 60;
+            this.iFrames = 40;
         }
 
         if (this.health === 0) {
-            // Restart, go to menu
+            this.scene.scene.stop("hud");
+            this.scene.scene.start("main-menu");
+            this.handler.clearEntities();
         }
     }
 

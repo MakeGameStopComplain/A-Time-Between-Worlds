@@ -38,4 +38,10 @@ class Handler {
         this.entitiesToRemove.push(entity);
     }
 
+    clearEntities() {
+        for (let key in this.entities) {
+            delete this.entities[key];
+        }
+    }
+
 }
