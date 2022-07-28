@@ -14,6 +14,19 @@ class Door extends Entity {
   update() {
     super.update();
 
+    if (this.scene.timeState === "normal") {
+      if (this.isOpen) {
+        this.sprite.setTexture("door", 0);
+      } else {
+        this.sprite.setTexture("door", 1);
+      }
+    } else {
+      if (this.isOpen) {
+        this.sprite.setTexture("door purple", 0);
+      } else {
+        this.sprite.setTexture("door purple", 1);
+      }
+    }
   }
 
   openDoor() {

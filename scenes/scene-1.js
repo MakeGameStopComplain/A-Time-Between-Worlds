@@ -23,7 +23,9 @@ class Scene1 extends Phaser.Scene {
         this.load.image("background5-apocalyptic", "image/tree n road apocalyptic.png");
         this.load.spritesheet("spikes", "image/spikes.png", { frameWidth: 32, frameHeight: 32 });
         this.load.spritesheet("pressure plate", "image/button.png", { frameWidth: 32, frameHeight: 32 });
-
+        this.load.spritesheet("pressure plate purple", "image/button purple.png", { frameWidth: 32, frameHeight: 32 });
+        this.load.spritesheet("door", "image/door normal.png", { frameWidth: 32, frameHeight: 32 });
+        this.load.spritesheet("door purple", "image/door purple.png", { frameWidth: 32, frameHeight: 32 });
     }
 
     create() {

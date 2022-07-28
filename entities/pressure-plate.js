@@ -19,10 +19,18 @@ class PressurePlate extends Entity {
 
     this.isPressed = boxOnPressurePlate || playerPressurePlate;
 
-    if (this.isPressed) {
-      this.sprite.setTexture("pressure plate", 1);
+    if (this.scene.timeState === "normal") {
+      if (this.isPressed) {
+        this.sprite.setTexture("pressure plate", 1);
+      } else {
+        this.sprite.setTexture("pressure plate", 0);
+      }
     } else {
-      this.sprite.setTexture("pressure plate", 0);
+      if (this.isPressed) {
+        this.sprite.setTexture("pressure plate purple", 1);
+      } else {
+        this.sprite.setTexture("pressure plate purple", 0);
+      }
     }
 
   }
