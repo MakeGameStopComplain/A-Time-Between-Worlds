@@ -32,9 +32,17 @@ class Scene1 extends Phaser.Scene {
         this.load.spritesheet("fire", "image/fire.png", { frameWidth: 32, frameHeight: 32 });
         this.load.audio("normalmusic", "muzak/nice_song.mp3");
         this.load.audio("apocmusic", "muzak/scary_song.mp3");
+        this.load.audio("coinsound", "sound/coin.wav");
+        this.load.audio("damagesound", "sound/damage.wav");
+        this.load.audio("explosionsound", "sound/explosion.wav");
+        this.load.audio("jumpsound", "sound/jump.wav");
+        this.load.audio("selectsound", "sound/select.wav");
     }
 
     create() {
+        // Internal clock
+        this.internalClock = -1;
+
         // Background
         this.background1 = this.add.tileSprite(0, 0, gameWidth, gameHeight, "bg1", 4);
         this.background1.setOrigin(0, 0);
@@ -171,6 +179,8 @@ class Scene1 extends Phaser.Scene {
     }
 
     update() {
+        this.internalClock++;
+
         this.handler.update();
 
         // Makes the clouds move
@@ -210,7 +220,6 @@ class Scene1 extends Phaser.Scene {
 
             collider.active = !door.isOpen;
         }
-
     }
     
     onTimeStateChange() {
@@ -222,6 +231,10 @@ class Scene1 extends Phaser.Scene {
         for (let i = 0; i < this.doors.length; i++) {
             let collider = this.doors[i][1];
             this.physics.world.removeCollider(collider);
+        }
+
+        if (this.particles) {
+            this.particles.destroy();
         }
 
         switch (this.timeState) {
@@ -261,6 +274,22 @@ class Scene1 extends Phaser.Scene {
                 this.playerCollider = this.physics.add.collider(this.player.sprite, this.tiles);
                 this.boxCollider1 = this.physics.add.collider(this.box.sprite, this.tiles);
                 this.boxCollider2 = this.physics.add.collider(this.box.sprite, this.player.sprite);
+
+                this.particles = this.add.particles("normal-player");
+
+                this.particles.createEmitter({
+                    x: { min: 300, max: 1000 },
+                    y: { min: 0, max: 850 },
+                    lifespan: 400,
+                    speedX: { min: 0, max: 0 },
+                    speedY: { min: -10, max: -100 },
+                    scale: { start: 0.4, end: 0.2 },
+                    rotate: {start: 10, end: 200},
+                    alpha: {end: 0, min: 0, max: 0.5},
+                    quantity: 0.0001,
+                    frequency: 0.0001,
+                    blendMode: 'NORMAL'
+                });
 
                 for (let i = 0; i < this.doors.length; i++) {
                     let door = this.doors[i][0];
