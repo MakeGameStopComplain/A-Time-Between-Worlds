@@ -5,6 +5,7 @@ class MainMenu extends Phaser.Scene {
 
     preload() {
         this.load.image("coverart", "image/title image-4.png.png");
+        this.load.spritesheet("playbutton", "image/2worldbuttons.png", { frameWidth: 320, frameHeight: 640 / 4 });
     }
 
     create() {
