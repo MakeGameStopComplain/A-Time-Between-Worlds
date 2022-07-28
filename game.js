@@ -19,7 +19,7 @@ window.onload = function() {
             target: 60,
             forceSetTimeOut: true
         },
-        scene: [/*MainMenu, */Scene1, HUD],
+        scene: [MainMenu, Scene1, HUD],
         pixelArt: true
     };
     
