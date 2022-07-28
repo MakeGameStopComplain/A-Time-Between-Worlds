@@ -25,6 +25,7 @@ class Entity {
         this.parent = parent;
         parent.children[this.hash] = this;
     }
+
     clearParent() {
         if (!this.parent) return;
         delete this.parent.children[this.hash];
