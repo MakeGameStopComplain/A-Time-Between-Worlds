@@ -29,6 +29,8 @@ class Scene1 extends Phaser.Scene {
         this.load.image("box", "image/pushbox.png");
         this.load.image("box purple", "image/pushbox-purple.png");
         this.load.spritesheet("fire", "image/fire.png", { frameWidth: 32, frameHeight: 32 });
+        this.load.audio("normalmusic", "muzak/nice_song.mp3");
+        this.load.audio("apocmusic", "muzak/scary_song.mp3");
     }
 
     create() {
@@ -150,6 +152,15 @@ class Scene1 extends Phaser.Scene {
             frameRate: 8,
             repeat: 0
         });
+
+        // Music
+        this.music1 = this.sound.add("normalmusic");
+        this.music1.loop = true;
+        this.music1.play();
+        this.music2 = this.sound.add("apocmusic");
+        this.music2.loop = true;
+        this.music2.play();
+        this.music2.setVolume(0);
     }
 
     update() {
@@ -232,6 +243,8 @@ class Scene1 extends Phaser.Scene {
 
                 this.player.sprite.tint = 0xffffff;
                 
+                this.music1.setVolume(1);
+                this.music2.setVolume(0);
                 break;
             case "apocalyptic":
                 this.baseTilemap = this.make.tilemap({ key: "testmap2", tileWidth: 32, tileHeight: 32 });
@@ -258,6 +271,8 @@ class Scene1 extends Phaser.Scene {
 
                 this.player.sprite.tint = 0xee66ff; // I couldn't think of a way to seamlessly switch spritesheets, so this is a temporary solution to that.
                         
+                this.music1.setVolume(0);
+                this.music2.setVolume(1);
                 break;
         }
     }
