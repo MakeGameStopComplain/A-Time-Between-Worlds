@@ -28,6 +28,7 @@ class Scene1 extends Phaser.Scene {
         this.load.spritesheet("door purple", "image/door purple.png", { frameWidth: 32, frameHeight: 32 });
         this.load.image("box", "image/pushbox.png");
         this.load.image("box purple", "image/pushbox-purple.png");
+        this.load.spritesheet("fire", "image/fire.png", { frameWidth: 32, frameHeight: 32 });
     }
 
     create() {
@@ -109,6 +110,22 @@ class Scene1 extends Phaser.Scene {
                 endPortal.sprite.x = (tile.x + 0.5) * tileSize * (gameScale / 16);
                 endPortal.sprite.y = (tile.y + 0.5) * tileSize * (gameScale / 16);
                 this.handler.addEntity(endPortal);
+            } else if (tile.index === 88) {
+                // LOL!!!!
+                this.anims.create({
+                    key: "flames",
+                    frames: this.anims.generateFrameNumbers("fire", { start: 0, end: 11 }),
+                    frameRate: 8,
+                    repeat: -1
+                });
+
+                let flames = new Fire(this.handler, this, "fire", "fire");
+                flames.sprite.x = (tile.x + 0.5) * tileSize * (gameScale / 16);
+                flames.sprite.y = (tile.y + 0.5) * tileSize * (gameScale / 16);
+                this.handler.addEntity(flames);
+                flames.sprite.depth = 3;
+
+                flames.sprite.play("flames", true);
             }
         });
 
