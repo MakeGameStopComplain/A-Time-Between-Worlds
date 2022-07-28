@@ -28,6 +28,7 @@ class Scene1 extends Phaser.Scene {
         this.load.spritesheet("door purple", "image/door purple.png", { frameWidth: 32, frameHeight: 32 });
         this.load.image("box", "image/pushbox.png");
         this.load.image("box purple", "image/pushbox-purple.png");
+        this.load.spritesheet("portal", "image/portal.png", { frameWidth: 32, frameHeight: 32 });
     }
 
     create() {
@@ -130,6 +131,13 @@ class Scene1 extends Phaser.Scene {
         this.anims.create({
             key: "normal-player-stopping",
             frames: this.anims.generateFrameNumbers("normal-player", { start: 14, end: 17 }),
+            frameRate: 8,
+            repeat: 0
+        });
+
+        this.anims.create({
+            key: "portal-animation",
+            frames: this.anims.generateFrameNumbers("portal", { start: 0, end: 3 }),
             frameRate: 8,
             repeat: 0
         });

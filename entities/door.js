@@ -1,7 +1,5 @@
 class Door extends Entity {
 
-  doorCollider;
-
   constructor(handler, scene, spriteName, entityName) {
     super(handler, scene, spriteName, entityName);
 
