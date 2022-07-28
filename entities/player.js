@@ -1,21 +1,27 @@
 class Player extends Entity {
+
+    health = 5;
+
     constructor(handler, scene, spriteName, entityName) {
         super(handler, scene, spriteName, entityName);
 
+        // Input
         this.Button1 = this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.Z);
         this.Button2 = this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.X);
         this.Button3 = this.scene.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.C);
         this.cursors = this.scene.input.keyboard.createCursorKeys();
 
+        // Sprite Setup
         this.sprite.setCollideWorldBounds(true);
         this.sprite.setDragX(5000);
         this.sprite.setGravityY(2000);
         this.sprite.scale = gameScale / 16;
-
         this.sprite.body.setSize(16, 16).setOffset(8, 16);
 
-        this.lastVelocityX = 0
-    }  
+        // Taking Damage
+        this.iFrames = 0;
+
+    }
 
     update() {
         const speed = 100;
@@ -64,7 +70,7 @@ class Player extends Entity {
             this.sprite.play("normal-player-idle", true);
         }
 
-        if (!accelerating && velocityX != 0) {
+        if (!accelerating && velocityX !== 0) {
             this.sprite.play("normal-player-stopping", true);
         }
 
@@ -83,6 +89,28 @@ class Player extends Entity {
             this.scene.onTimeStateChange();
         }
 
+        // Damage Handling
+        if (this.iFrames > 0) {
+            this.iFrames--;
+            if (this.iFrames % 10 > 6) {
+                this.sprite.tint = 0xeb3434;
+            } else {
+                this.sprite.tint = 0xffffff;
+            }
+        }
+
         super.update();
     }
+
+    takeDamage() {
+        if (this.iFrames === 0) {
+            this.health--;
+            this.iFrames = 60;
+        }
+
+        if (this.health === 0) {
+            // Restart, go to menu
+        }
+    }
+
 }

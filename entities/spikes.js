@@ -7,9 +7,10 @@ class Spikes extends Entity {
         this.sprite.setSize(this.sprite.width, 4).setOffset(0, 18);
     }
 
-    onHit(playa, spika) {
-        playa.body.velocity.y = -1000;
+    onHit(player, spike) {
+        player.body.velocity.y = -1000;
         this.remakeOverlapper();
+        this.scene.player.takeDamage();
     }
 
     remakeOverlapper() {

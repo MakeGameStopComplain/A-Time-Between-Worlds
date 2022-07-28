@@ -62,6 +62,9 @@ class Scene1 extends Phaser.Scene {
         this.playerCollider = this.physics.add.collider(this.player.sprite, this.layer1);
         this.player.sprite.depth = 2;
 
+        // HUD
+        this.scene.launch("hud", {player: this.player});
+
         // Camera
         this.physics.world.setBounds(0, 0, gameWidth * this.levelLength / 16, gameHeight * this.levelHeight / 9);
         this.cameras.main.setBounds(0, 0, gameWidth * this.levelLength / 16, gameHeight * this.levelHeight / 9);
