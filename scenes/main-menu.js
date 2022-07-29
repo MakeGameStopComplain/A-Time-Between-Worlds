@@ -8,6 +8,7 @@ class MainMenu extends Phaser.Scene {
         this.load.image("credits", "image/about-popup.png");
         this.load.spritesheet("playbutton", "image/2worldbuttons.png", { frameWidth: 320, frameHeight: 640 / 4 });
         this.load.audio("titlesong", "muzak/dumbsong.wav");
+        this.load.image("title", "image/title text.png");
     }
 
     create() {
@@ -16,6 +17,8 @@ class MainMenu extends Phaser.Scene {
         this.credits = this.add.image(gameWidth / 2, gameHeight / 2, "credits");
         this.credits.setScale(gameWidth / 2000);
         this.credits.visible = false;
+
+        this.titleText = this.add.image(gameWidth / 2, gameHeight / 2, "title");
 
         this.playbutton = this.add.sprite(125, gameHeight - 70, "playbutton", 0);
         this.playbutton.setScale(0.69);
