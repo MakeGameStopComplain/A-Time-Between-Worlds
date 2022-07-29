@@ -159,17 +159,8 @@ class Level3 extends Phaser.Scene {
 
     let cameraY = this.cameras.main.scrollY;
     this.background3.tilePositionY = cameraY / ((this.levelHeight / 16) * 15);
-    this.background4.tilePositionY = cameraY / ((this.levelHeight / 16) *  7);
+    this.background4.tilePositionY = cameraY / ((this.levelHeight / 16) * 7);
     this.background5.tilePositionY = cameraY / ((this.levelHeight / 16) * 13);
-
-    // Adds in gravity zones
-    if (this.player.sprite.x > 14 * 2 * gameScale && this.player.sprite.x < 18 * 2 * gameScale && this.timeState === "apocalyptic") {
-      this.player.sprite.setGravityY(-200);
-    } else if (this.timeState === "apocalyptic") {
-      this.player.sprite.setGravityY(1000);
-    } else {
-      this.player.sprite.setGravityY(1700);
-    }
   }
 
   onTimeStateChange() {
