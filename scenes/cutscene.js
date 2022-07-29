@@ -26,6 +26,7 @@ class cutscene extends Phaser.Scene {
 
         setTimeout(function() {
             this.scene.start("level1");
+            this.song.pause();
         }.bind(this), 15 / 2 * 1000);
     }
     
