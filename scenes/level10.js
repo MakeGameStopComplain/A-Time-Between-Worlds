@@ -99,7 +99,7 @@ class Level10 extends Phaser.Scene {
             speedY: { min: -100, max: -5 },
             scale: { start: 0.4, end: 0 },
             rotate: { min: 0, max: 360, end: 0 },
-            quantity: 10,
+            quantity: 5,
             frequency: 1,
             alpha: { end: 0, min: 0.2, max: 0.6 },
             blendMode: 'ADD'
@@ -114,7 +114,7 @@ class Level10 extends Phaser.Scene {
             speedY: { min: -20, max: -5 },
             scale: { start: 0.4, end: 0 },
             rotate: { min: 0, max: 360, end: 0 },
-            quantity: 10,
+            quantity: 5,
             frequency: 1,
             alpha: { end: 0, min: 0.2, max: 0.6 },
             blendMode: 'ADD'
@@ -128,7 +128,7 @@ class Level10 extends Phaser.Scene {
             speedY: { min: -100, max: -5 },
             scale: { start: 0.4, end: 0 },
             rotate: { min: 0, max: 360, end: 0 },
-            quantity: 10,
+            quantity: 5,
             frequency: 1,
             alpha: { end: 0, min: 0.2, max: 0.6 },
             blendMode: 'ADD'
@@ -143,7 +143,7 @@ class Level10 extends Phaser.Scene {
             speedY: { min: -20, max: -5 },
             scale: { start: 0.4, end: 0 },
             rotate: { min: 0, max: 360, end: 0 },
-            quantity: 10,
+            quantity: 5,
             frequency: 1,
             alpha: { end: 0, min: 0.2, max: 0.6 },
             blendMode: 'ADD'
