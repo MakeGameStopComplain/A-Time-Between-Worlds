@@ -1,6 +1,6 @@
 class Level1 extends Phaser.Scene {
+  // This level shows the player they need to switch worlds
 
-  // We could eventually get the length from the length of a csv row
   levelLength = 40;
   levelHeight = 16;
 
@@ -15,8 +15,8 @@ class Level1 extends Phaser.Scene {
         {frameWidth: 32, frameHeight: 32});
     this.load.spritesheet("apocalyptic-player", "image/apocalyptic-player.png",
         {frameWidth: 32, frameHeight: 32});
-    this.load.tilemapCSV("normalmap", "tilemaps/level1-normal.csv");
-    this.load.tilemapCSV("purplemap", "tilemaps/level1-purple.csv");
+    this.load.tilemapCSV("normalmap1", "tilemaps/level1-normal.csv");
+    this.load.tilemapCSV("purplemap1", "tilemaps/level1-purple.csv");
     this.load.image("world1tiles", "image/blocksnormal.png");
     this.load.image("world1tiles-purple", "image/blockspurple.png");
     this.load.spritesheet("bg1", "image/parallax back 1.png",
@@ -66,7 +66,7 @@ class Level1 extends Phaser.Scene {
 
     // World Setup
     this.baseTilemap = this.make.tilemap(
-        {key: "normalmap", tileWidth: 32, tileHeight: 32});
+        {key: "normalmap1", tileWidth: 32, tileHeight: 32});
     var world1tiles = this.baseTilemap.addTilesetImage("world1tileset",
         "world1tiles");
     this.tiles = this.baseTilemap.createLayer(0, world1tiles, 0, 0);
@@ -79,6 +79,9 @@ class Level1 extends Phaser.Scene {
     this.playerCollider = this.physics.add.collider(this.player.sprite,
         this.tiles);
     this.player.sprite.depth = 2;
+    this.player.sprite.x = 0;
+    // Spawns the player on the ground
+    this.player.sprite.y = ((this.levelHeight - 4) * 32) * (gameScale / 16);
 
     // HUD
     this.scene.launch("hud", {player: this.player});
@@ -93,7 +96,7 @@ class Level1 extends Phaser.Scene {
     // Makes entities for each special tile
     this.tiles.forEachTile((tile) => {
       if (tile.index === 69) {
-        let endPortal = new Portal(this.handler, this, "portal", "portal");
+        let endPortal = new Portal(this.handler, this, "portal", "portal", "level1","level2");
         endPortal.setCollector(this.player);
         endPortal.sprite.x = (tile.x + 0.5) * tileSize * (gameScale / 16);
         endPortal.sprite.y = (tile.y + 0.5) * tileSize * (gameScale / 16);
@@ -157,10 +160,9 @@ class Level1 extends Phaser.Scene {
     this.background5.tilePositionX = cameraX / 20;
 
     let cameraY = this.cameras.main.scrollY;
-    this.background3.tilePositionY = cameraY / 15;
-    this.background4.tilePositionY = cameraY / 7;
-    this.background5.tilePositionY = cameraY / 13;
-
+    this.background3.tilePositionY = cameraY / ((this.levelHeight / 16) * 15);
+    this.background4.tilePositionY = cameraY / ((this.levelHeight / 16) * 7);
+    this.background5.tilePositionY = cameraY / ((this.levelHeight / 16) * 13);
   }
 
   onTimeStateChange() {
@@ -170,7 +172,7 @@ class Level1 extends Phaser.Scene {
     switch (this.timeState) {
       case "normal":
         this.baseTilemap = this.make.tilemap(
-            {key: "normalmap", tileWidth: 32, tileHeight: 32});
+            {key: "normalmap1", tileWidth: 32, tileHeight: 32});
         var world1tiles = this.baseTilemap.addTilesetImage("world1tileset",
             "world1tiles");
         this.tiles = this.baseTilemap.createLayer(0, world1tiles, 0, 0);
@@ -193,7 +195,7 @@ class Level1 extends Phaser.Scene {
         break;
       case "apocalyptic":
         this.baseTilemap = this.make.tilemap(
-            {key: "purplemap", tileWidth: 32, tileHeight: 32});
+            {key: "purplemap1", tileWidth: 32, tileHeight: 32});
         var world1tiles = this.baseTilemap.addTilesetImage("world1tileset",
             "world1tiles-purple");
         this.tiles = this.baseTilemap.createLayer(0, world1tiles, 0, 0);

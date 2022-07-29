@@ -3,7 +3,7 @@ class Box extends Entity {
     super(handler, scene, spriteName, entityName);
 
     this.sprite.setCollideWorldBounds(true);
-    this.sprite.setDragX(1000);
+    this.sprite.setDragX(800);
     this.sprite.setGravityY(2000);
     this.sprite.scale = gameScale / 16;
   }

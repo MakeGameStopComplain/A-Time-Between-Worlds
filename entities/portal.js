@@ -1,6 +1,9 @@
 class Portal extends Collectable {
-    constructor(handler, scene, spriteName, entityName) {
+    constructor(handler, scene, spriteName, entityName, thisLevel, nextLevel) {
         super(handler, scene, spriteName, entityName);
+
+        this.thisLevel = thisLevel;
+        this.nextLevel = nextLevel;
 
         this.sprite.scale = gameScale / 16;
     }
@@ -10,7 +13,8 @@ class Portal extends Collectable {
     }
 
     onPickup() {
-        // level beaten I guess
-        console.log("hooray.");
+        // This triggers when the player beats the level
+        this.scene.scene.start(this.nextLevel);
+        this.scene.scene.stop(this.thisLevel);
     }
 }

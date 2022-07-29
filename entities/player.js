@@ -16,10 +16,11 @@ class Player extends Entity {
 
         // Sprite Setup
         this.sprite.setCollideWorldBounds(true);
-        this.sprite.setDragX(5000);
+        this.sprite.setDragX(4300);
         this.sprite.setGravityY(1700);
         this.sprite.scale = gameScale / 16;
         this.sprite.body.setSize(16, 16).setOffset(8, 16);
+        this.sprite.flipX = true;
 
         // Taking Damage
         this.iFrames = 0;
@@ -78,16 +79,18 @@ class Player extends Entity {
             this.sprite.play("normal-player-stopping", true);
         }
 
-        // Switching between worlds
+        // Switching between worlds, gravity is less in purple, running is faster
         if (Phaser.Input.Keyboard.JustDown(this.Button3)) {
             switch (this.scene.timeState) {
                 case "apocalyptic":
                     this.scene.timeState = "normal";
-                    this.sprite.setGravityY(2000);
+                    this.sprite.setGravityY(1700);
+                    this.sprite.setDragX(4300);
                     break;
                 case "normal":
                     this.scene.timeState = "apocalyptic";
                     this.sprite.setGravityY(1000);
+                    this.sprite.setDragX(5500);
                     break;
             }
             this.scene.onTimeStateChange();
