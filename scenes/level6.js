@@ -38,6 +38,7 @@ class Level6 extends Phaser.Scene {
     this.load.audio("jumpsound", "sound/jump.wav");
     this.load.audio("selectsound", "sound/select.wav");
     this.load.spritesheet("fire", "image/fire.png", { frameWidth: 32, frameHeight: 32 });
+    this.load.spritesheet("bounce", "image/jumppad.png", { frameWidth: 32, frameHeight: 32 });
   }
 
   create() {
@@ -106,10 +107,19 @@ class Level6 extends Phaser.Scene {
         endPortal.sprite.y = (tile.y + 0.5) * tileSize * (gameScale / 16);
         this.handler.addEntity(endPortal);
       } else if (tile.index == 26) {
+        this.anims.create({
+            key: "bouncepad",
+            frames: this.anims.generateFrameNumbers("bounce", { start: 0, end: 3 }),
+            frameRate: 8,
+            repeat: -1
+        });
+
         let bouncePad = new BouncyPad(this.handler, this, "bounce", "bouncy");
         bouncePad.sprite.x = (tile.x + 0.5) * tileSize * (gameScale / 16);
         bouncePad.sprite.y = (tile.y + 0.5) * tileSize * (gameScale / 16);
         this.handler.addEntity(bouncePad);
+
+        bouncePad.sprite.play("bouncepad");
       } else if (tile.index === 88) {
           // LOL!!!!
           this.anims.create({
