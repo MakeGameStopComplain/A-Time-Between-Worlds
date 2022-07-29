@@ -19,5 +19,6 @@ class Portal extends Collectable {
         this.scene.scene.stop(this.thisLevel);
         this.scene.stopMusic();
         this.handler.clearEntities();
+        if (this.scene.wizard) this.scene.wizard.destroy();
     }
 }
