@@ -20,7 +20,7 @@
             "scale": 0.6946874999999999,
             "selectedLayer": 0,
             "viewCenter": {
-                "x": 641.2955465587047,
+                "x": 640.5757984705353,
                 "y": 256.9500674763833
             }
         },
@@ -47,9 +47,25 @@
                 "x": 1885,
                 "y": 43
             }
+        },
+        "level6.tmx": {
+            "scale": 0.75,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 536,
+                "y": 108
+            }
+        },
+        "level9.tmx": {
+            "scale": 0.396142578125,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 1024.8835202761002,
+                "y": 257.4830518920252
+            }
         }
     },
-    "last.exportedFilePath": "D:/Users/jackg/Desktop/Web Dev Code/A-Time-Between-Worlds/tilemaps",
+    "last.exportedFilePath": "/home/yikuan/Documents/Git Repos/A-Time-Between-Worlds/tilemaps",
     "last.imagePath": "D:/Users/jackg/Desktop/Web Dev Code/A-Time-Between-Worlds/image",
     "map.height": 16,
     "map.lastUsedExportFilter": "CSV files (*.csv)",
@@ -59,6 +75,8 @@
     ],
     "project": "level1-normal.tiled-project",
     "recentFiles": [
+        "level6.tmx",
+        "level9.tmx",
         "level2.tmx",
         "level1.tmx",
         "level1-normal.tmx"

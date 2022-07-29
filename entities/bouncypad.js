@@ -3,10 +3,11 @@ class BouncyPad extends Entity {
         super(handler, scene, spriteName, entityName);
         this.sprite.scale = gameScale / 16;
         this.overlapper = this.scene.physics.add.overlap(this.scene.player.sprite, this.sprite, this.onHit, null, this);
+        this.strength = 900;
     }
 
     onHit(player, pad) {
-        player.body.velocity.y = -1000;
+        player.body.velocity.y = -this.strength;
         this.remakeOverlapper();
     }
 
