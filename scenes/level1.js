@@ -150,6 +150,7 @@ class Level1 extends Phaser.Scene {
     this.wizard = this.physics.add.sprite(200, 750, "wizard");
     this.wizard.setScale(gameScale / 16);
     this.wizard.play("wizard-idle", true);
+    this.wizardText = this.add.text(200, 690, "Hello Jack.");
 
     // Music
     this.music1 = this.sound.add("normalmusic");
@@ -180,7 +181,12 @@ class Level1 extends Phaser.Scene {
     this.background4.tilePositionY = cameraY / ((this.levelHeight / 16) * 7);
     this.background5.tilePositionY = cameraY / ((this.levelHeight / 16) * 13);
 
-    if (Math.pow(this.player.sprite.x - 200, 2) + Math.pow(this.player.sprite.y - 750, 2) <= 69 ** 2) console.log("hi");
+    if (Math.pow(this.player.sprite.x - 200, 2) + Math.pow(this.player.sprite.y - 750, 2) <= 69 ** 2) {
+      this.wizardText.setAlpha(1);
+    }
+    else {
+      this.wizardText.setAlpha(0);
+    }
   }
 
   onTimeStateChange() {
