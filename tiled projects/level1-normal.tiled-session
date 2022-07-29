@@ -102,6 +102,9 @@
             }
         }
     },
+    "last.exportedFilePath": "D:/Users/jackg/Desktop/Web Dev Code/A-Time-Between-Worlds/tilemaps",
+    "map.lastUsedExportFilter": "CSV files (*.csv)",
+    "map.lastUsedFormat": "tmx",
     "openFiles": [
     ],
     "project": "level1-normal.tiled-project",
