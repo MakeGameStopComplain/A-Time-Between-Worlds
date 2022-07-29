@@ -22,7 +22,7 @@ class MainMenu extends Phaser.Scene {
             this.playbutton.setTexture("playbutton", 0);
         }.bind(this));
         this.playbutton.on("pointerdown", function() {
-            this.scene.start("level5");
+            this.scene.start("level1");
         }.bind(this));
     }
 
