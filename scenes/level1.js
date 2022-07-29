@@ -156,7 +156,7 @@ class Level1 extends Phaser.Scene {
     this.wizard.setScale(gameScale / 16);
     this.wizard.play("wizard-idle", true);
     this.wizardText = this.add.text(100, 650, 
-        "Use ←→ to MOVE, and ↑ or X to JUMP.\n" + 
+        "Use ARROWS to MOVE, and X to JUMP.\n" + 
         "Some jumps are too big, I wonder if\n" +
         "they're possible in a different world...\n" +
         "Use C to SWITCH BETWEEN WORLDS!", 
