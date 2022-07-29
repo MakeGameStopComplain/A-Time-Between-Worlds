@@ -14,10 +14,14 @@ class Level8 extends Phaser.Scene {
         {frameWidth: 32, frameHeight: 32});
     this.load.spritesheet("apocalyptic-player", "image/apocalyptic-player.png",
         {frameWidth: 32, frameHeight: 32});
-    this.load.tilemapCSV("normalmap8", "tilemaps/level7-normal.csv");
-    this.load.tilemapCSV("purplemap8", "tilemaps/level7-purple.csv");
+    this.load.tilemapCSV("normalmap8", "tilemaps/level8-normal.csv");
+    this.load.tilemapCSV("purplemap8", "tilemaps/level8-purple.csv");
     this.load.image("world1tiles", "image/blocksnormal.png");
+    this.load.spritesheet("world1tiles-sprite", "image/blocksnormal.png",
+        {frameWidth: 32, frameHeight: 32});
     this.load.image("world1tiles-purple", "image/blockspurple.png");
+    this.load.spritesheet("world1tiles-purple-sprite", "image/blockspurple.png",
+        {frameWidth: 32, frameHeight: 32});
     this.load.spritesheet("bg1", "image/parallax back 1.png",
         {frameWidth: 128 * 6, frameHeight: 96 * 6});
     this.load.spritesheet("bg2", "image/parallax back 2.png",
@@ -27,7 +31,18 @@ class Level8 extends Phaser.Scene {
         "image/tree n road apocalyptic.png");
     this.load.spritesheet("portal", "image/portal.png",
         {frameWidth: 32, frameHeight: 32});
-    this.load.spritesheet("spikes", "image/spikes.png", { frameWidth: 32, frameHeight: 32 });
+    this.load.spritesheet("pressure plate", "image/button.png",
+        {frameWidth: 32, frameHeight: 32});
+    this.load.spritesheet("pressure plate purple", "image/button purple.png",
+        {frameWidth: 32, frameHeight: 32});
+    this.load.spritesheet("door", "image/door normal.png",
+        {frameWidth: 32, frameHeight: 32});
+    this.load.spritesheet("door purple", "image/door purple.png",
+        {frameWidth: 32, frameHeight: 32});
+    this.load.image("box", "image/pushbox.png");
+    this.load.image("box purple", "image/pushbox-purple.png");
+    this.load.spritesheet("fire", "image/fire.png",
+        {frameWidth: 32, frameHeight: 32});
     this.load.audio("normalmusic", "muzak/nice_song.mp3");
     this.load.audio("apocmusic", "muzak/scary_song.mp3");
     this.load.audio("coinsound", "sound/coin.wav");
@@ -84,6 +99,23 @@ class Level8 extends Phaser.Scene {
     // Spawns the player on the ground
     this.player.sprite.y = ((this.levelHeight - 4) * 32) * (gameScale / 16);
 
+    // Boxes
+    // Has the box sprites and colliders
+    this.boxes = [];
+    for (let i = 0; i < 1; i++) {
+      let box = new Box(this.handler, this, "box", "box");
+      box.sprite.depth = 3;
+      box.sprite.y = ((this.levelHeight - 7) * 32) * (gameScale / 16);
+      this.handler.addEntity(box);
+      let boxCollider1 = this.physics.add.collider(box.sprite, this.tiles);
+      let boxCollider2 = this.physics.add.collider(box.sprite,
+          this.player.sprite);
+      let boxAndColliders = [box, [boxCollider1, boxCollider2]];
+      this.boxes.push(boxAndColliders);
+    }
+
+    this.boxes[0][0].sprite.x = 930;
+
     // HUD
     this.scene.launch("hud", {player: this.player});
 
@@ -95,15 +127,58 @@ class Level8 extends Phaser.Scene {
     this.cameras.main.startFollow(this.player.sprite);
 
     // Makes entities for each special tile
+    this.doors = [];
+    this.pressurePlates = [];
+    this.backgroundWalls = [];
     this.tiles.forEachTile((tile) => {
-      if (tile.index === 25) {
-        let spikes = new Spikes(this.handler, this, "spikes", "spikes");
-        spikes.sprite.x = (tile.x + 0.5) * tileSize * (gameScale / 16);
-        spikes.sprite.y = (tile.y + 0.5) * tileSize * (gameScale / 16);
-        this.handler.addEntity(spikes);
-        spikes.sprite.depth = 3;
+      if (tile.index === 24) {
+        let pressurePlate = new PressurePlate(this.handler, this,
+            "pressure plate", "pressure plate", this.boxes, this.player);
+        pressurePlate.sprite.x = (tile.x + 0.5) * tileSize * (gameScale / 16);
+        pressurePlate.sprite.y = (tile.y + 0.5) * tileSize * (gameScale / 16);
+        this.handler.addEntity(pressurePlate);
+        this.pressurePlates.push(pressurePlate);
+        pressurePlate.sprite.depth = 1;
+      } else if (tile.index === 23) {
+        let door = new Door(this.handler, this, "door", "door", this.player);
+        door.sprite.x = (tile.x + 0.5) * tileSize * (gameScale / 16);
+        door.sprite.y = (tile.y + 0.5) * tileSize * (gameScale / 16);
+        this.handler.addEntity(door);
+        let doorAndCollider = [door,
+          [this.physics.add.collider(door.sprite, this.player.sprite)]];
+        this.doors.push(doorAndCollider);
+        door.sprite.depth = 1;
+        let wall = this.add.sprite((tile.x + 0.5) * tileSize * (gameScale / 16),
+            (tile.y + 0.5) * tileSize * (gameScale / 16), "world1tiles-sprite",
+            16);
+        wall.scale = gameScale / 16;
+        wall.depth = 0;
+        this.backgroundWalls.push(wall);
+      } else if (tile.index === 88) {
+        // LOL!!!!
+        this.anims.create({
+          key: "flames",
+          frames: this.anims.generateFrameNumbers("fire", {start: 0, end: 11}),
+          frameRate: 8,
+          repeat: -1
+        });
+
+        let flames = new Fire(this.handler, this, "fire", "fire");
+        flames.sprite.x = (tile.x + 0.5) * tileSize * (gameScale / 16);
+        flames.sprite.y = (tile.y + 0.5) * tileSize * (gameScale / 16);
+        this.handler.addEntity(flames);
+        flames.sprite.depth = 3;
+
+        flames.sprite.play("flames", true);
+        let wall = this.add.sprite((tile.x + 0.5) * tileSize * (gameScale / 16),
+            (tile.y + 0.5) * tileSize * (gameScale / 16), "world1tiles-sprite",
+            16);
+        wall.scale = gameScale / 16;
+        wall.depth = 0;
+        this.backgroundWalls.push(wall)
       } else if (tile.index === 69) {
-        let endPortal = new Portal(this.handler, this, "portal", "portal", "level8","level9");
+        let endPortal = new Portal(this.handler, this, "portal", "portal",
+            "level8", "level9");
         endPortal.setCollector(this.player);
         endPortal.sprite.x = (tile.x + 0.5) * tileSize * (gameScale / 16);
         endPortal.sprite.y = (tile.y + 0.5) * tileSize * (gameScale / 16);
@@ -173,18 +248,68 @@ class Level8 extends Phaser.Scene {
     this.background5.tilePositionY = cameraY / ((this.levelHeight / 16) * 13);
 
     // Adds in gravity zones
-    if (this.player.sprite.x > 28 * 2 * gameScale && this.player.sprite.x < 45 * 2 * gameScale && this.timeState === "apocalyptic") {
-      this.player.sprite.setGravityY(0);
-    } else if (this.timeState === "apocalyptic") {
-      this.player.sprite.setGravityY(1000);
+    try {
+      if (this.player.sprite.x > 20 * 2 * gameScale && this.player.sprite.x < 40
+          * 2 * gameScale && this.timeState === "apocalyptic") {
+        this.player.sprite.setGravityY(-230);
+        for (let boxAndColliders of this.boxes) {
+          let box = boxAndColliders[0];
+          box.sprite.setGravityY(-330);
+          box.sprite.setDragX(100);
+        }
+      } else if (this.timeState === "apocalyptic") {
+        this.player.sprite.setGravityY(1000);
+        for (let boxAndColliders of this.boxes) {
+          let box = boxAndColliders[0];
+          box.sprite.setGravityY(1000);
+          box.sprite.setDragX(900);
+        }
+      } else {
+        this.player.sprite.setGravityY(1700);
+        for (let boxAndColliders of this.boxes) {
+          let box = boxAndColliders[0];
+          box.sprite.setGravityY(1700);
+          box.sprite.setDragX(900);
+        }
+      }
+    } catch (err) {}
+
+    // Connects pressure plates and doors
+    if (this.pressurePlates[0].isPressed) {
+      this.doors[0][0].openDoor();
     } else {
-      this.player.sprite.setGravityY(1700);
+      this.doors[0][0].closeDoor();
+    }
+
+    // Opens and closes doors collision
+    for (let doorAndColliders of this.doors) {
+      let door = doorAndColliders[0];
+      let colliders = doorAndColliders[1];
+      for (let collider of colliders) {
+        collider.active = !door.isOpen;
+      }
     }
   }
 
   onTimeStateChange() {
     this.baseTilemap.destroy();
     this.physics.world.removeCollider(this.playerCollider);
+
+    // Removes box colliders
+    for (let boxAndColliders of this.boxes) {
+      let colliders = boxAndColliders[1];
+      for (let collider of colliders) {
+        this.physics.world.removeCollider(collider);
+      }
+    }
+
+    // Remove door colliders
+    for (let doorAndColliders of this.doors) {
+      let colliders = doorAndColliders[1];
+      for (let collider of colliders) {
+        this.physics.world.removeCollider(collider);
+      }
+    }
 
     switch (this.timeState) {
       case "normal":
@@ -197,6 +322,23 @@ class Level8 extends Phaser.Scene {
         this.playerCollider = this.physics.add.collider(this.player.sprite,
             this.tiles);
 
+        for (let i = 0; i < this.boxes.length; i++) {
+          let box = this.boxes[i][0];
+          box.sprite.setTexture("box");
+          this.boxes[i][1][0] = this.physics.add.collider(box.sprite,
+              this.tiles);
+          this.boxes[i][1][1] = this.physics.add.collider(box.sprite,
+              this.player.sprite);
+        }
+
+        // Adds door colliders
+        for (let doorAndColliders of this.doors) {
+          let door = doorAndColliders[0];
+          let colliders = doorAndColliders[1];
+          colliders.push(
+              this.physics.add.collider(door.sprite, this.player.sprite));
+        }
+
         this.tiles.setCollisionBetween(1, 10);
 
         this.background1.setTexture("bg1", 4);
@@ -204,6 +346,10 @@ class Level8 extends Phaser.Scene {
         this.background3.setTexture("bg1", 2);
         this.background4.setTexture("bg1", 1);
         this.background5.setTexture("background5-normal");
+
+        for (let wall of this.backgroundWalls) {
+          wall.setTexture("world1tiles-sprite", 16);
+        }
 
         this.player.sprite.tint = 0xffffff;
 
@@ -220,6 +366,23 @@ class Level8 extends Phaser.Scene {
         this.playerCollider = this.physics.add.collider(this.player.sprite,
             this.tiles);
 
+        for (let i = 0; i < this.boxes.length; i++) {
+          let box = this.boxes[i][0];
+          box.sprite.setTexture("box purple");
+          this.boxes[i][1][0] = this.physics.add.collider(box.sprite,
+              this.tiles);
+          this.boxes[i][1][1] = this.physics.add.collider(box.sprite,
+              this.player.sprite);
+        }
+
+        // Adds door colliders
+        for (let doorAndColliders of this.doors) {
+          let door = doorAndColliders[0];
+          let colliders = doorAndColliders[1];
+          colliders.push(
+              this.physics.add.collider(door.sprite, this.player.sprite));
+        }
+
         this.tiles.setCollisionBetween(1, 10);
 
         this.background1.setTexture("bg2", 4);
@@ -227,6 +390,10 @@ class Level8 extends Phaser.Scene {
         this.background3.setTexture("bg2", 2);
         this.background4.setTexture("bg2", 1);
         this.background5.setTexture("background5-apocalyptic");
+
+        for (let wall of this.backgroundWalls) {
+          wall.setTexture("world1tiles-purple-sprite", 16);
+        }
 
         this.player.sprite.tint = 0xee66ff; // I couldn't think of a way to seamlessly switch spritesheets, so this is a temporary solution to that.
 

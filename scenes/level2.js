@@ -206,8 +206,6 @@ class Level2 extends Phaser.Scene {
 
     this.internalClock++;
 
-    this.handler.update();
-
     // Makes the clouds move
     this.background2.tilePositionX += .2;
 
