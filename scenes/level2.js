@@ -111,7 +111,7 @@ class Level2 extends Phaser.Scene {
     this.wizard = this.physics.add.sprite(200, 1710, "wizard");
     this.wizard.setScale(gameScale / 16);
     this.wizard.play("wizard-idle", true);
-    this.wizardText = this.add.text(100, 1650, 
+    this.wizardText = this.add.text(100, 1620, 
         "Sometimes, technology exists in one\n" + 
         "world, but not another...\n",
         {
@@ -197,6 +197,8 @@ class Level2 extends Phaser.Scene {
   }
 
   update() {
+    this.handler.update();
+
     const textDistance = Math.sqrt((this.player.sprite.x - this.wizard.x)**2 + (this.player.sprite.y - this.wizard.y)**2);
     if (textDistance < 100) {
         this.wizardText.setAlpha(((100 - textDistance) / 100)**0.2);

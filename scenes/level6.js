@@ -77,6 +77,19 @@ class Level6 extends Phaser.Scene {
     this.tiles.scale = gameScale / 16;
     this.tiles.setCollisionBetween(1, 10);
 
+    // Mad scientist
+    this.wizard = this.physics.add.sprite(200, 810, "wizard");
+    this.wizard.setScale(gameScale / 16);
+    this.wizard.play("wizard-idle", true);
+    this.wizardText = this.add.text(75, 750, 
+        "Not all obstacles hurt you...",
+        {
+            stroke: "#00000",
+            strokeThickness: 5,
+            lineSpacing: -5,
+        }
+    );
+
     // Player Setup
     this.player = new Player(this.handler, this, "", "player");
     this.handler.addEntity(this.player);
@@ -207,6 +220,12 @@ class Level6 extends Phaser.Scene {
     this.background4.tilePositionY = cameraY / ((this.levelHeight / 16) * 7);
     this.background5.tilePositionY = cameraY / ((this.levelHeight / 16) * 13);
 
+    const textDistance = Math.sqrt((this.player.sprite.x - this.wizard.x)**2 + (this.player.sprite.y - this.wizard.y)**2);
+    if (textDistance < 100) {
+        this.wizardText.setAlpha(((100 - textDistance) / 100)**0.2);
+    } else {
+        this.wizardText.setAlpha(0);
+    }
   }
 
   onTimeStateChange() {

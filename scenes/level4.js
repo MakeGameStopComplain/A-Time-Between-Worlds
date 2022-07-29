@@ -161,7 +161,7 @@ class Level4 extends Phaser.Scene {
     this.wizard = this.physics.add.sprite(300, 990, "wizard");
     this.wizard.setScale(gameScale / 16);
     this.wizard.play("wizard-idle", true);
-    this.wizardText = this.add.text(175, 9, 
+    this.wizardText = this.add.text(175, 900, 
         "Do I even have to tell you to\n" + 
         "not step on the spikes?",
         {
