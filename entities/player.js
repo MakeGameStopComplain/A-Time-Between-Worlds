@@ -21,6 +21,7 @@ class Player extends Entity {
         this.sprite.scale = gameScale / 16;
         this.sprite.body.setSize(16, 16).setOffset(8, 16);
         this.sprite.flipX = true;
+        this.velocityCapX = 1000;
 
         // Taking Damage
         this.iFrames = 0;
@@ -28,7 +29,6 @@ class Player extends Entity {
 
     update() {
         const speed = 100;
-        const velocityCapX = 1000;
         const velocityCapY = 850;
         let velocityX = this.sprite.body.velocity.x;
         let velocityY = this.sprite.body.velocity.y;
@@ -77,7 +77,7 @@ class Player extends Entity {
             this.scene.sound.add("jumpsound").play();
         }
 
-        this.sprite.setVelocity(clamp(velocityX, velocityCapX, -velocityCapX), clamp(velocityY, velocityCapY, -velocityCapY));
+        this.sprite.setVelocity(clamp(velocityX, this.velocityCapX, -this.velocityCapX), clamp(velocityY, velocityCapY, -velocityCapY));
 
         if (Math.abs(velocityX) > 5) {
             this.sprite.play("normal-player-run", true);
