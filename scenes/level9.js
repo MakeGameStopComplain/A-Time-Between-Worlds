@@ -1,10 +1,11 @@
-class Level8 extends Phaser.Scene {
+class Level9 extends Phaser.Scene {
+  // This level shows the player they need to switch worlds
 
-  levelLength = 64;
-  levelHeight = 32;
+  levelLength = 88;
+  levelHeight = 20;
 
   constructor() {
-    super("level8");
+    super("level9");
     this.handler = new Handler();
     this.timeState = "normal"; // "apocalyptic"
   }
@@ -14,8 +15,8 @@ class Level8 extends Phaser.Scene {
         {frameWidth: 32, frameHeight: 32});
     this.load.spritesheet("apocalyptic-player", "image/apocalyptic-player.png",
         {frameWidth: 32, frameHeight: 32});
-    this.load.tilemapCSV("normalmap8", "tilemaps/level7-normal.csv");
-    this.load.tilemapCSV("purplemap8", "tilemaps/level7-purple.csv");
+    this.load.tilemapCSV("normalmap9", "tilemaps/level9-normal.csv");
+    this.load.tilemapCSV("purplemap9", "tilemaps/level9-purple.csv");
     this.load.image("world1tiles", "image/blocksnormal.png");
     this.load.image("world1tiles-purple", "image/blockspurple.png");
     this.load.spritesheet("bg1", "image/parallax back 1.png",
@@ -27,7 +28,10 @@ class Level8 extends Phaser.Scene {
         "image/tree n road apocalyptic.png");
     this.load.spritesheet("portal", "image/portal.png",
         {frameWidth: 32, frameHeight: 32});
-    this.load.spritesheet("spikes", "image/spikes.png", { frameWidth: 32, frameHeight: 32 });
+    this.load.spritesheet("wizard", "image/mad scientist.png",
+        {frameWidth: 32, frameHeight: 32});
+        this.load.spritesheet("fire", "image/fire.png",
+            {frameWidth: 32, frameHeight: 32});
     this.load.audio("normalmusic", "muzak/nice_song.mp3");
     this.load.audio("apocmusic", "muzak/scary_song.mp3");
     this.load.audio("coinsound", "sound/coin.wav");
@@ -66,7 +70,7 @@ class Level8 extends Phaser.Scene {
 
     // World Setup
     this.baseTilemap = this.make.tilemap(
-        {key: "normalmap8", tileWidth: 32, tileHeight: 32});
+        {key: "normalmap9", tileWidth: 32, tileHeight: 32});
     var world1tiles = this.baseTilemap.addTilesetImage("world1tileset",
         "world1tiles");
     this.tiles = this.baseTilemap.createLayer(0, world1tiles, 0, 0);
@@ -96,18 +100,33 @@ class Level8 extends Phaser.Scene {
 
     // Makes entities for each special tile
     this.tiles.forEachTile((tile) => {
-      if (tile.index === 25) {
-        let spikes = new Spikes(this.handler, this, "spikes", "spikes");
-        spikes.sprite.x = (tile.x + 0.5) * tileSize * (gameScale / 16);
-        spikes.sprite.y = (tile.y + 0.5) * tileSize * (gameScale / 16);
-        this.handler.addEntity(spikes);
-        spikes.sprite.depth = 3;
-      } else if (tile.index === 69) {
-        let endPortal = new Portal(this.handler, this, "portal", "portal", "level8","level9");
+      if (tile.index === 69) {
+        let endPortal = new Portal(this.handler, this, "portal", "portal", "level9","level10");
         endPortal.setCollector(this.player);
         endPortal.sprite.x = (tile.x + 0.5) * tileSize * (gameScale / 16);
         endPortal.sprite.y = (tile.y + 0.5) * tileSize * (gameScale / 16);
         this.handler.addEntity(endPortal);
+      } else if (tile.index == 26) {
+        let bouncePad = new BouncyPad(this.handler, this, "bounce", "bouncy");
+        bouncePad.sprite.x = (tile.x + 0.5) * tileSize * (gameScale / 16);
+        bouncePad.sprite.y = (tile.y + 0.5) * tileSize * (gameScale / 16);
+        this.handler.addEntity(bouncePad);
+      } else if (tile.index === 88) {
+          // LOL!!!!
+          this.anims.create({
+              key: "flames",
+              frames: this.anims.generateFrameNumbers("fire", { start: 0, end: 11 }),
+              frameRate: 8,
+              repeat: -1
+          });
+
+          let flames = new Fire(this.handler, this, "fire", "fire");
+          flames.sprite.x = (tile.x + 0.5) * tileSize * (gameScale / 16);
+          flames.sprite.y = (tile.y + 0.5) * tileSize * (gameScale / 16);
+          this.handler.addEntity(flames);
+          flames.sprite.depth = 3;
+
+          flames.sprite.play("flames", true);
       }
     });
 
@@ -143,6 +162,14 @@ class Level8 extends Phaser.Scene {
       repeat: 0
     });
 
+    this.anims.create({
+        key: "wizard-idle",
+        frames: this.anims.generateFrameNumbers("wizard", { start: 0, end: 1 }),
+        frameRate: 2,
+        repeat: -1
+    });
+
+
     // Music
     this.music1 = this.sound.add("normalmusic");
     this.music1.loop = true;
@@ -171,15 +198,6 @@ class Level8 extends Phaser.Scene {
     this.background3.tilePositionY = cameraY / ((this.levelHeight / 16) * 15);
     this.background4.tilePositionY = cameraY / ((this.levelHeight / 16) * 7);
     this.background5.tilePositionY = cameraY / ((this.levelHeight / 16) * 13);
-
-    // Adds in gravity zones
-    if (this.player.sprite.x > 28 * 2 * gameScale && this.player.sprite.x < 45 * 2 * gameScale && this.timeState === "apocalyptic") {
-      this.player.sprite.setGravityY(0);
-    } else if (this.timeState === "apocalyptic") {
-      this.player.sprite.setGravityY(1000);
-    } else {
-      this.player.sprite.setGravityY(1700);
-    }
   }
 
   onTimeStateChange() {
@@ -189,7 +207,7 @@ class Level8 extends Phaser.Scene {
     switch (this.timeState) {
       case "normal":
         this.baseTilemap = this.make.tilemap(
-            {key: "normalmap8", tileWidth: 32, tileHeight: 32});
+            {key: "normalmap9", tileWidth: 32, tileHeight: 32});
         var world1tiles = this.baseTilemap.addTilesetImage("world1tileset",
             "world1tiles");
         this.tiles = this.baseTilemap.createLayer(0, world1tiles, 0, 0);
@@ -212,7 +230,7 @@ class Level8 extends Phaser.Scene {
         break;
       case "apocalyptic":
         this.baseTilemap = this.make.tilemap(
-            {key: "purplemap8", tileWidth: 32, tileHeight: 32});
+            {key: "purplemap9", tileWidth: 32, tileHeight: 32});
         var world1tiles = this.baseTilemap.addTilesetImage("world1tileset",
             "world1tiles-purple");
         this.tiles = this.baseTilemap.createLayer(0, world1tiles, 0, 0);
