@@ -1,13 +1,8 @@
 {
-    "Map/SizeTest": {
-        "height": 4300,
-        "width": 2
-    },
     "activeFile": "level7.tmx",
     "expandedProjectPaths": [
         "."
     ],
-    "file.lastUsedOpenFilter": "All Files (*)",
     "fileStates": {
         "blocksnormal.tsx": {
             "scaleInDock": 1
@@ -24,7 +19,7 @@
             "scale": 0.6946874999999999,
             "selectedLayer": 0,
             "viewCenter": {
-                "x": 640.5757984705353,
+                "x": 641.2955465587047,
                 "y": 256.9500674763833
             }
         },
@@ -52,20 +47,6 @@
                 "y": 43
             }
         },
-        "level6.tmx": {
-            "scale": 0.75,
-            "selectedLayer": 0,
-            "viewCenter": {
-                "x": 536,
-                "y": 108
-            }
-        },
-        "level9.tmx": {
-            "scale": 0.396142578125,
-            "selectedLayer": 0,
-            "viewCenter": {
-                "x": 1024.8835202761002,
-                "y": 257.4830518920252
         "level7.tmx": {
             "scale": 0.75,
             "selectedLayer": 0,
@@ -75,31 +56,22 @@
             }
         },
         "level8.tmx": {
-            "scale": 1,
+            "scale": 0.5,
             "selectedLayer": 0,
             "viewCenter": {
-                "x": 1013,
-                "y": 707.5
+                "x": 2010,
+                "y": 585
             }
         }
     },
-    "last.exportedFilePath": "/home/yikuan/Documents/Git Repos/A-Time-Between-Worlds/tilemaps",
-    "last.imagePath": "D:/Users/jackg/Desktop/Web Dev Code/A-Time-Between-Worlds/image",
-    "map.height": 16,
-    "map.lastUsedExportFilter": "CSV files (*.csv)",
-    "map.lastUsedFormat": "tmx",
-    "map.width": 64,
     "openFiles": [
         "level7.tmx"
     ],
     "project": "level1-normal.tiled-project",
     "recentFiles": [
-        "level6.tmx",
-        "level9.tmx",
         "level7.tmx",
         "level2.tmx",
         "level1.tmx",
         "level1-normal.tmx"
-    ],
-    "tileset.lastUsedFormat": "tsx"
+    ]
 }

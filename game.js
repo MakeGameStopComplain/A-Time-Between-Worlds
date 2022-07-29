@@ -21,11 +21,7 @@ window.onload = function() {
             target: fps,
             forceSetTimeOut: true
         },
-<<<<<<< HEAD
         scene: [MainMenu, Level1, Level2, Level3, Level4, Level5, Level6, Level7, Level8, Scene1, HUD, EndLevel],
-=======
-        scene: [MainMenu, Level1, Level2, Level3, Level4, Level5, Scene1, HUD, EndLevel],
->>>>>>> 7900979 (fixed text)
         pixelArt: true
     };
     
