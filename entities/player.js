@@ -126,8 +126,8 @@ class Player extends Entity {
         if (this.health === 0) {
             this.scene.scene.stop("hud");
             this.scene.stopMusic();
-            this.scene.scene.restart();
             this.handler.clearEntities();
+            this.scene.scene.restart();
         }
 
         this.scene.sound.add("damagesound").play();

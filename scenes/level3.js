@@ -73,6 +73,20 @@ class Level3 extends Phaser.Scene {
     this.tiles.scale = gameScale / 16;
     this.tiles.setCollisionBetween(1, 10);
 
+    // Mad scientist
+    this.wizard = this.physics.add.sprite(300, 750, "wizard");
+    this.wizard.setScale(gameScale / 16);
+    this.wizard.play("wizard-idle", true);
+    this.wizardText = this.add.text(175, 675, 
+        "Switching worlds still preserves\n" + 
+        "momentum!",
+        {
+            stroke: "#00000",
+            strokeThickness: 5,
+            lineSpacing: -5,
+        }
+    );
+
     // Player Setup
     this.player = new Player(this.handler, this, "", "player");
     this.handler.addEntity(this.player);
@@ -149,6 +163,13 @@ class Level3 extends Phaser.Scene {
   }
 
   update() {
+    const textDistance = Math.sqrt((this.player.sprite.x - this.wizard.x)**2 + (this.player.sprite.y - this.wizard.y)**2);
+    if (textDistance < 200) {
+        this.wizardText.setAlpha(((200 - textDistance) / 200)**0.2);
+    } else {
+        this.wizardText.setAlpha(0);
+    }
+
     this.internalClock++;
 
     this.handler.update();

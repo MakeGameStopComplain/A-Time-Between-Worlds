@@ -73,6 +73,54 @@ class Level2 extends Phaser.Scene {
     this.tiles.scale = gameScale / 16;
     this.tiles.setCollisionBetween(1, 10);
 
+    // Particles
+    this.particles = this.add.particles('box');
+    this.particles.depth = 2;
+    this.particles.visible = false;
+    this.particles.createEmitter(
+        {
+            x: { min: 14 * 2 * gameScale, max: 18 * 2 * gameScale },
+            y: { min: 1700, max: 1750 },
+            speedX: 0,
+            speedY: { min: -100, max: -5 },
+            scale: { start: 0.4, end: 0 },
+            rotate: { min: 0, max: 360, end: 0 },
+            quantity: 4,
+            frequency: 1,
+            alpha: { end: 0, min: 0.2, max: 0.6 },
+            blendMode: 'ADD'
+        }
+    );
+    this.particles.createEmitter(
+        {
+            x: { min: 14 * 2 * gameScale, max: 18 * 2 * gameScale },
+            y: { min: 400, max: 1700 },
+            lifespan: 1000,
+            speedX: 0,
+            speedY: { min: -20, max: -5 },
+            scale: { start: 0.4, end: 0 },
+            rotate: { min: 0, max: 360, end: 0 },
+            quantity: 1,
+            frequency: 1,
+            alpha: { end: 0, min: 0.2, max: 0.6 },
+            blendMode: 'ADD'
+        }
+    );
+    
+    // Mad scientist
+    this.wizard = this.physics.add.sprite(200, 1710, "wizard");
+    this.wizard.setScale(gameScale / 16);
+    this.wizard.play("wizard-idle", true);
+    this.wizardText = this.add.text(100, 1650, 
+        "Sometimes, technology exists in one\n" + 
+        "world, but not another...\n",
+        {
+            stroke: "#00000",
+            strokeThickness: 5,
+            lineSpacing: -5,
+        }
+    );
+
     // Player Setup
     this.player = new Player(this.handler, this, "", "player");
     this.handler.addEntity(this.player);
@@ -149,6 +197,13 @@ class Level2 extends Phaser.Scene {
   }
 
   update() {
+    const textDistance = Math.sqrt((this.player.sprite.x - this.wizard.x)**2 + (this.player.sprite.y - this.wizard.y)**2);
+    if (textDistance < 100) {
+        this.wizardText.setAlpha(((100 - textDistance) / 100)**0.2);
+    } else {
+        this.wizardText.setAlpha(0);
+    }
+
     this.internalClock++;
 
     this.handler.update();
@@ -201,6 +256,7 @@ class Level2 extends Phaser.Scene {
         this.background5.setTexture("background5-normal");
 
         this.player.sprite.tint = 0xffffff;
+        this.particles.visible = false;
 
         this.music1.setVolume(1);
         this.music2.setVolume(0);
@@ -224,6 +280,7 @@ class Level2 extends Phaser.Scene {
         this.background5.setTexture("background5-apocalyptic");
 
         this.player.sprite.tint = 0xee66ff; // I couldn't think of a way to seamlessly switch spritesheets, so this is a temporary solution to that.
+        this.particles.visible = true;
 
         this.music1.setVolume(0);
         this.music2.setVolume(1);

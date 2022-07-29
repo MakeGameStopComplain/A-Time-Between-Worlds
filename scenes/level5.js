@@ -212,9 +212,18 @@ class Level5 extends Phaser.Scene {
     });
 
     // Mad scientist
-    this.wizard = this.physics.add.sprite(200, 750, "wizard");
+    this.wizard = this.physics.add.sprite(300, 750, "wizard");
     this.wizard.setScale(gameScale / 16);
     this.wizard.play("wizard-idle", true);
+    this.wizardText = this.add.text(175, 600, 
+        "Quite a heavy box here, I wonder\n" + 
+        "if it could be used for anything...",
+        {
+            stroke: "#00000",
+            strokeThickness: 5,
+            lineSpacing: -5,
+        }
+    );
 
     // Music
     this.music1 = this.sound.add("normalmusic");
@@ -237,6 +246,13 @@ class Level5 extends Phaser.Scene {
   }
 
   update() {
+    const textDistance = Math.sqrt((this.player.sprite.x - this.wizard.x)**2 + (this.player.sprite.y - this.wizard.y)**2);
+    if (textDistance < 100) {
+        this.wizardText.setAlpha(((100 - textDistance) / 100)**0.2);
+    } else {
+        this.wizardText.setAlpha(0);
+    }
+
     this.internalClock++;
 
     this.handler.update();
@@ -282,8 +298,6 @@ class Level5 extends Phaser.Scene {
         collider.active = !door.isOpen;
       }
     }
-
-    if (Math.pow(this.player.sprite.x - 200, 2) + Math.pow(this.player.sprite.y - 750, 2) <= 69 ** 2) console.log("hi");
   }
 
   onTimeStateChange() {

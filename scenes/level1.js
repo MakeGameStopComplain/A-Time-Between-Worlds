@@ -82,7 +82,7 @@ class Level1 extends Phaser.Scene {
         this.tiles);
     this.player.sprite.depth = 2;
     this.player.sprite.x = 0;
-    this.player.velocityCapX = 1000;
+    this.player.velocityCapX = 500;
     // Spawns the player on the ground
     this.player.sprite.y = ((this.levelHeight - 4) * 32) * (gameScale / 16);
 
@@ -155,7 +155,18 @@ class Level1 extends Phaser.Scene {
     this.wizard = this.physics.add.sprite(200, 750, "wizard");
     this.wizard.setScale(gameScale / 16);
     this.wizard.play("wizard-idle", true);
-    this.wizardText = this.add.text(200, 690, "Hello Jack.");
+    this.wizardText = this.add.text(100, 650, 
+        "Use ←→ to MOVE, and ↑ or X to JUMP.\n" + 
+        "Some jumps are too big, I wonder if\n" +
+        "they're possible in a different world...\n" +
+        "Use C to SWITCH BETWEEN WORLDS!", 
+        {
+            stroke: "#00000",
+            strokeThickness: 5,
+            lineSpacing: -5,
+        }
+    );
+
 
     // Music
     this.music1 = this.sound.add("normalmusic");
@@ -186,11 +197,11 @@ class Level1 extends Phaser.Scene {
     this.background4.tilePositionY = cameraY / ((this.levelHeight / 16) * 7);
     this.background5.tilePositionY = cameraY / ((this.levelHeight / 16) * 13);
 
-    if (Math.pow(this.player.sprite.x - 200, 2) + Math.pow(this.player.sprite.y - 750, 2) <= 69 ** 2) {
-      this.wizardText.setAlpha(1);
-    }
-    else {
-      this.wizardText.setAlpha(0);
+    const textDistance = Math.sqrt((this.player.sprite.x - this.wizard.x)**2 + (this.player.sprite.y - this.wizard.y)**2);
+    if (textDistance < 100) {
+        this.wizardText.setAlpha(((100 - textDistance) / 100)**0.2);
+    } else {
+        this.wizardText.setAlpha(0);
     }
   }
 
