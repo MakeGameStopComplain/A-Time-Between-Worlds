@@ -49,8 +49,6 @@ class Player extends Entity {
             return Math.max(Math.min(x, a), b);
         }
 
-        console.log(this.sprite.y);
-
         if (this.cursors.left.isDown) {
             // Caps the speed in the purple world
             if (this.scene.timeState !== "apocalyptic" || this.sprite.body.velocity.x > -600) {
