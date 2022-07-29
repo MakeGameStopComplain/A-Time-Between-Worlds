@@ -3,11 +3,15 @@
         "height": 4300,
         "width": 2
     },
-    "activeFile": "",
+    "activeFile": "level7.tmx",
     "expandedProjectPaths": [
+        "."
     ],
     "file.lastUsedOpenFilter": "All Files (*)",
     "fileStates": {
+        "blocksnormal.tsx": {
+            "scaleInDock": 1
+        },
         "level1-normal.tmx": {
             "scale": 0.5,
             "selectedLayer": 0,
@@ -62,6 +66,20 @@
             "viewCenter": {
                 "x": 1024.8835202761002,
                 "y": 257.4830518920252
+        "level7.tmx": {
+            "scale": 0.75,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 1331.3333333333335,
+                "y": 296.66666666666663
+            }
+        },
+        "level8.tmx": {
+            "scale": 1,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 1013,
+                "y": 707.5
             }
         }
     },
@@ -72,11 +90,13 @@
     "map.lastUsedFormat": "tmx",
     "map.width": 64,
     "openFiles": [
+        "level7.tmx"
     ],
     "project": "level1-normal.tiled-project",
     "recentFiles": [
         "level6.tmx",
         "level9.tmx",
+        "level7.tmx",
         "level2.tmx",
         "level1.tmx",
         "level1-normal.tmx"
