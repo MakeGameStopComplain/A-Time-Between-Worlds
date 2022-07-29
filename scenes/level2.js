@@ -94,7 +94,7 @@ class Level2 extends Phaser.Scene {
     // Makes entities for each special tile
     this.tiles.forEachTile((tile) => {
       if (tile.index === 69) {
-        let endPortal = new Portal(this.handler, this, "portal", "portal", "level3");
+        let endPortal = new Portal(this.handler, this, "portal", "portal", "level2", "level3");
         endPortal.setCollector(this.player);
         endPortal.sprite.x = (tile.x + 0.5) * tileSize * (gameScale / 16);
         endPortal.sprite.y = (tile.y + 0.5) * tileSize * (gameScale / 16);
@@ -224,6 +224,11 @@ class Level2 extends Phaser.Scene {
         this.music2.setVolume(1);
         break;
     }
+  }
+
+  stopMusic() {
+    this.music1.pause();
+    this.music2.pause();
   }
 
 }

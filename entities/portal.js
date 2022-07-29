@@ -16,5 +16,6 @@ class Portal extends Collectable {
         // This triggers when the player beats the level
         this.scene.scene.start(this.nextLevel);
         this.scene.scene.stop(this.thisLevel);
+        this.scene.stopMusic();
     }
 }

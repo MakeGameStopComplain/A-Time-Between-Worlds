@@ -24,7 +24,6 @@ class Player extends Entity {
 
         // Taking Damage
         this.iFrames = 0;
-
     }
 
     update() {
@@ -38,11 +37,11 @@ class Player extends Entity {
         if (this.sprite.body.blocked.down) {
             this.sprite.rotation = 0;
         } else  {
-            const speed = (Math.abs(this.sprite.body.velocity.y) / 4000) + (Math.abs(this.sprite.body.velocity.x) / 7000);
+            const rotation = (Math.abs(this.sprite.body.velocity.y) / 4000) + (Math.abs(this.sprite.body.velocity.x) / 7000);
             if (this.sprite.flipX) {
-                this.sprite.rotation += speed;
+                this.sprite.rotation += rotation;
             } else  {
-                this.sprite.rotation -= speed;
+                this.sprite.rotation -= rotation;
             }
         }
         
@@ -50,13 +49,24 @@ class Player extends Entity {
             return Math.max(Math.min(x, a), b);
         }
 
+        console.log(velocityX);
+
         if (this.cursors.left.isDown) {
-            velocityX -= speed;
+            // Caps the speed in the purple world
+            if (this.scene.timeState !== "apocalyptic" || this.sprite.body.velocity.x > -600) {
+                velocityX -= speed;
+            } else {
+                velocityX -= speed * 9 / 10;
+            }
             this.sprite.flipX = false;
             accelerating = true;
         }
         if (this.cursors.right.isDown) {
-            velocityX += speed;
+            if (this.scene.timeState !== "apocalyptic" || this.sprite.body.velocity.x < 600) {
+                velocityX += speed;
+            } else {
+                velocityX += speed * 9 / 10;
+            }
             this.sprite.flipX = true;
             accelerating = true;
         }
