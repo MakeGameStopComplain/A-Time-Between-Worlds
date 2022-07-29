@@ -7,6 +7,7 @@ class MainMenu extends Phaser.Scene {
         this.load.image("coverart", "image/title image-4.png.png");
         this.load.image("credits", "image/about-popup.png");
         this.load.spritesheet("playbutton", "image/2worldbuttons.png", { frameWidth: 320, frameHeight: 640 / 4 });
+        this.load.audio("titlesong", "muzak/dumbsong.wav");
     }
 
     create() {
@@ -26,6 +27,7 @@ class MainMenu extends Phaser.Scene {
             this.playbutton.setTexture("playbutton", 0);
         }.bind(this));
         this.playbutton.on("pointerdown", function() {
+            this.titleMusic.pause();
             this.scene.start("level1");
         }.bind(this));
 
@@ -41,6 +43,9 @@ class MainMenu extends Phaser.Scene {
         this.aboutButton.on("pointerdown", function() {
             this.credits.visible = !this.credits.visible;
         }.bind(this));
+
+        this.titleMusic = this.sound.add("titlesong");
+        this.titleMusic.play();
     }
 
     update() {}
