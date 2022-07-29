@@ -17,7 +17,7 @@ class cutscene extends Phaser.Scene {
             key: "custne",
             frames: this.anims.generateFrameNumbers("anim", { start: 0, end: 14 }),
             frameRate: 2,
-            repeat: -1
+            repeat: 0
         });
 
         this.kevinArt = this.add.sprite(gameWidth / 2, gameHeight / 2, "anim");
@@ -27,7 +27,7 @@ class cutscene extends Phaser.Scene {
         setTimeout(function() {
             this.scene.start("level1");
             this.song.pause();
-        }.bind(this), 15 / 2 * 1000);
+        }.bind(this), 10000);
     }
     
     update() {
