@@ -31,7 +31,7 @@ class MainMenu extends Phaser.Scene {
         }.bind(this));
         this.playbutton.on("pointerdown", function() {
             this.titleMusic.pause();
-            this.scene.start("level1");
+            this.scene.start("cutscene");
         }.bind(this));
 
         this.aboutButton = this.add.sprite(gameWidth - 125, gameHeight - 70, "playbutton", 2);
