@@ -15,8 +15,8 @@ class EndLevel extends Phaser.Scene {
         {frameWidth: 32, frameHeight: 32});
     this.load.spritesheet("apocalyptic-player", "image/apocalyptic-player.png",
         {frameWidth: 32, frameHeight: 32});
-    this.load.tilemapCSV("normalmap2", "tilemaps/ending-normal.csv");
-    this.load.tilemapCSV("purplemap2", "tilemaps/ending-purple.csv");
+    this.load.tilemapCSV("normalmapEnd", "tilemaps/ending-normal.csv");
+    this.load.tilemapCSV("purplemapEnd", "tilemaps/ending-purple.csv");
     this.load.image("world1tiles", "image/blocksnormal.png");
     this.load.image("world1tiles-purple", "image/blockspurple.png");
     this.load.spritesheet("bg1", "image/parallax back 1.png",
@@ -69,7 +69,7 @@ class EndLevel extends Phaser.Scene {
 
     // World Setup
     this.baseTilemap = this.make.tilemap(
-        {key: "normalmap2", tileWidth: 32, tileHeight: 32});
+        {key: "normalmapEnd", tileWidth: 32, tileHeight: 32});
     var world1tiles = this.baseTilemap.addTilesetImage("world1tileset",
         "world1tiles");
     this.tiles = this.baseTilemap.createLayer(0, world1tiles, 0, 0);
@@ -206,7 +206,7 @@ class EndLevel extends Phaser.Scene {
     switch (this.timeState) {
       case "normal":
         this.baseTilemap = this.make.tilemap(
-            {key: "normalmap2", tileWidth: 32, tileHeight: 32});
+            {key: "normalmapEnd", tileWidth: 32, tileHeight: 32});
         var world1tiles = this.baseTilemap.addTilesetImage("world1tileset",
             "world1tiles");
         this.tiles = this.baseTilemap.createLayer(0, world1tiles, 0, 0);
@@ -229,7 +229,7 @@ class EndLevel extends Phaser.Scene {
         break;
       case "apocalyptic":
         this.baseTilemap = this.make.tilemap(
-            {key: "purplemap2", tileWidth: 32, tileHeight: 32});
+            {key: "purplemapEnd", tileWidth: 32, tileHeight: 32});
         var world1tiles = this.baseTilemap.addTilesetImage("world1tileset",
             "world1tiles-purple");
         this.tiles = this.baseTilemap.createLayer(0, world1tiles, 0, 0);
