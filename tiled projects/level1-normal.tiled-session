@@ -8,17 +8,52 @@
     ],
     "file.lastUsedOpenFilter": "All Files (*)",
     "fileStates": {
+        "level1-normal.tmx": {
+            "scale": 0.5,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 491,
+                "y": 311
+            }
+        },
+        "level1.tmx": {
+            "scale": 0.6946874999999999,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 641.2955465587047,
+                "y": 256.9500674763833
+            }
+        },
+        "level2.tmx": {
+            "scale": 0.5,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 203,
+                "y": 189
+            }
+        },
+        "level3.tmx": {
+            "scale": 0.25,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 1642,
+                "y": 650
+            }
+        }
     },
     "last.exportedFilePath": "D:/Users/jackg/Desktop/Web Dev Code/A-Time-Between-Worlds/tilemaps",
     "last.imagePath": "D:/Users/jackg/Desktop/Web Dev Code/A-Time-Between-Worlds/image",
-    "map.height": 16,
+    "map.height": 20,
     "map.lastUsedExportFilter": "CSV files (*.csv)",
     "map.lastUsedFormat": "tmx",
-    "map.width": 40,
+    "map.width": 64,
     "openFiles": [
     ],
     "project": "level1-normal.tiled-project",
     "recentFiles": [
+        "level2.tmx",
+        "level1.tmx",
+        "level1-normal.tmx"
     ],
     "tileset.lastUsedFormat": "tsx"
 }
