@@ -31,7 +31,7 @@ class MainMenu extends Phaser.Scene {
         }.bind(this));
         this.playbutton.on("pointerdown", function() {
             this.titleMusic.pause();
-            this.scene.start("level7");
+            this.scene.start("level1");
         }.bind(this));
 
         this.aboutButton = this.add.sprite(gameWidth - 125, gameHeight - 70, "playbutton", 2);
@@ -45,6 +45,7 @@ class MainMenu extends Phaser.Scene {
         }.bind(this));
         this.aboutButton.on("pointerdown", function() {
             this.credits.visible = !this.credits.visible;
+            this.titleText.visible = !this.credits.visible;
         }.bind(this));
 
         this.titleMusic = this.sound.add("titlesong");
