@@ -28,6 +28,8 @@ class Level1 extends Phaser.Scene {
         "image/tree n road apocalyptic.png");
     this.load.spritesheet("portal", "image/portal.png",
         {frameWidth: 32, frameHeight: 32});
+    this.load.spritesheet("wizard", "image/mad scientist.png",
+        {frameWidth: 32, frameHeight: 32});
     this.load.audio("normalmusic", "muzak/nice_song.mp3");
     this.load.audio("apocmusic", "muzak/scary_song.mp3");
     this.load.audio("coinsound", "sound/coin.wav");
@@ -135,6 +137,19 @@ class Level1 extends Phaser.Scene {
       frameRate: 8,
       repeat: 0
     });
+
+    this.anims.create({
+        key: "wizard-idle",
+        frames: this.anims.generateFrameNumbers("wizard", { start: 0, end: 1 }),
+        frameRate: 2,
+        repeat: -1
+    });
+
+    // Mad scientist
+    this.wizard = this.physics.add.sprite(200, 750, "wizard");
+    this.wizard.setScale(gameScale / 16);
+    this.wizard.play("wizard-idle", true);
+
     // Music
     this.music1 = this.sound.add("normalmusic");
     this.music1.loop = true;
@@ -163,6 +178,8 @@ class Level1 extends Phaser.Scene {
     this.background3.tilePositionY = cameraY / ((this.levelHeight / 16) * 15);
     this.background4.tilePositionY = cameraY / ((this.levelHeight / 16) * 7);
     this.background5.tilePositionY = cameraY / ((this.levelHeight / 16) * 13);
+
+    if (Math.pow(this.player.sprite.x - 200, 2) + Math.pow(this.player.sprite.y - 750, 2) <= 69 ** 2) console.log("hi");
   }
 
   onTimeStateChange() {
