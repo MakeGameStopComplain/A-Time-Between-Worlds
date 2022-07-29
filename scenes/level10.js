@@ -88,6 +88,68 @@ class Level10 extends Phaser.Scene {
     // Spawns the player on the ground
     this.player.sprite.y = ((this.levelHeight - 4) * 32) * (gameScale / 16);
 
+    this.particles = this.add.particles('');
+    this.particles.depth = 2;
+    this.particles.visible = false;
+    this.particles.createEmitter(
+        {
+            x: { min: 9 * 2 * gameScale, max: 12 * 2 * gameScale },
+            y: { min: 1200, max: 1250 },
+            speedX: 0,
+            speedY: { min: -100, max: -5 },
+            scale: { start: 0.4, end: 0 },
+            rotate: { min: 0, max: 360, end: 0 },
+            quantity: 10,
+            frequency: 1,
+            alpha: { end: 0, min: 0.2, max: 0.6 },
+            blendMode: 'ADD'
+        }
+    );
+    this.particles.createEmitter(
+        {
+            x: { min: 9 * 2 * gameScale, max: 12 * 2 * gameScale },
+            y: { min: 0, max: 1200 },
+            lifespan: 1000,
+            speedX: 0,
+            speedY: { min: -20, max: -5 },
+            scale: { start: 0.4, end: 0 },
+            rotate: { min: 0, max: 360, end: 0 },
+            quantity: 10,
+            frequency: 1,
+            alpha: { end: 0, min: 0.2, max: 0.6 },
+            blendMode: 'ADD'
+        }
+    );
+    this.particles.createEmitter(
+        {
+            x: { min: 28 * 2 * gameScale, max: 35 * 2 * gameScale },
+            y: { min: 1200, max: 1250 },
+            speedX: 0,
+            speedY: { min: -100, max: -5 },
+            scale: { start: 0.4, end: 0 },
+            rotate: { min: 0, max: 360, end: 0 },
+            quantity: 10,
+            frequency: 1,
+            alpha: { end: 0, min: 0.2, max: 0.6 },
+            blendMode: 'ADD'
+        }
+    );
+    this.particles.createEmitter(
+        {
+            x: { min: 28 * 2 * gameScale, max: 35 * 2 * gameScale },
+            y: { min: 0, max: 1250 },
+            lifespan: 1000,
+            speedX: 0,
+            speedY: { min: -20, max: -5 },
+            scale: { start: 0.4, end: 0 },
+            rotate: { min: 0, max: 360, end: 0 },
+            quantity: 10,
+            frequency: 1,
+            alpha: { end: 0, min: 0.2, max: 0.6 },
+            blendMode: 'ADD'
+        }
+    );
+
     // HUD
     this.scene.launch("hud", {player: this.player});
 
@@ -229,6 +291,7 @@ class Level10 extends Phaser.Scene {
 
     switch (this.timeState) {
       case "normal":
+        this.particles.visible = false;
         this.baseTilemap = this.make.tilemap(
             {key: "normalmap10", tileWidth: 32, tileHeight: 32});
         var world1tiles = this.baseTilemap.addTilesetImage("world1tileset",
@@ -252,6 +315,7 @@ class Level10 extends Phaser.Scene {
         this.music2.setVolume(0);
         break;
       case "apocalyptic":
+        this.particles.visible = true;
         this.baseTilemap = this.make.tilemap(
             {key: "purplemap10", tileWidth: 32, tileHeight: 32});
         var world1tiles = this.baseTilemap.addTilesetImage("world1tileset",
