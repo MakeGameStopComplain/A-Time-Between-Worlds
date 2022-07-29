@@ -99,6 +99,11 @@ class Level2 extends Phaser.Scene {
         endPortal.sprite.x = (tile.x + 0.5) * tileSize * (gameScale / 16);
         endPortal.sprite.y = (tile.y + 0.5) * tileSize * (gameScale / 16);
         this.handler.addEntity(endPortal);
+      } else if (tile.index == 26) {
+        let bouncePad = new BouncyPad(this.handler, this, "bounce", "bouncy");
+        bouncePad.sprite.x = (tile.x + 0.5) * tileSize * (gameScale / 16);
+        bouncePad.sprite.y = (tile.y + 0.5) * tileSize * (gameScale / 16);
+        this.handler.addEntity(bouncePad);
       }
     });
 
