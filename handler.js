@@ -40,6 +40,7 @@ class Handler {
 
     clearEntities() {
         for (let key in this.entities) {
+            this.entities[key].destroy();
             delete this.entities[key];
         }
     }
