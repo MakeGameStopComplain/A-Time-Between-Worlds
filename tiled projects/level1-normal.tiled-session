@@ -33,11 +33,19 @@
             }
         },
         "level3.tmx": {
-            "scale": 0.25,
+            "scale": 1,
             "selectedLayer": 0,
             "viewCenter": {
-                "x": 1642,
-                "y": 650
+                "x": 1162.5,
+                "y": 289.5
+            }
+        },
+        "level4.tmx": {
+            "scale": 1,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 1224.5,
+                "y": 271.5
             }
         }
     },
@@ -46,7 +54,7 @@
     "map.height": 20,
     "map.lastUsedExportFilter": "CSV files (*.csv)",
     "map.lastUsedFormat": "tmx",
-    "map.width": 64,
+    "map.width": 96,
     "openFiles": [
     ],
     "project": "level1-normal.tiled-project",

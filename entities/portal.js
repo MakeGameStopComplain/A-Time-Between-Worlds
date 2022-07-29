@@ -2,6 +2,7 @@ class Portal extends Collectable {
     constructor(handler, scene, spriteName, entityName, thisLevel, nextLevel) {
         super(handler, scene, spriteName, entityName);
 
+        this.handler = handler;
         this.thisLevel = thisLevel;
         this.nextLevel = nextLevel;
 
@@ -17,5 +18,6 @@ class Portal extends Collectable {
         this.scene.scene.start(this.nextLevel);
         this.scene.scene.stop(this.thisLevel);
         this.scene.stopMusic();
+        this.handler.clearEntities();
     }
 }
