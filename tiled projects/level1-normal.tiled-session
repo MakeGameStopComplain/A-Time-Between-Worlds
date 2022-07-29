@@ -1,12 +1,13 @@
 {
+    "Map/SizeTest": {
+        "height": 4300,
+        "width": 2
+    },
+    "activeFile": "",
     "activeFile": "level7.tmx",
     "expandedProjectPaths": [
-        "."
     ],
     "fileStates": {
-        "blocksnormal.tsx": {
-            "scaleInDock": 1
-        },
         "level1-normal.tmx": {
             "scale": 0.5,
             "selectedLayer": 0,
@@ -47,6 +48,43 @@
                 "y": 43
             }
         },
+        "level6.tmx": {
+            "scale": 0.75,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 1093.3333333333335,
+                "y": 106.66666666666669
+            }
+        },
+        "level9.tmx": {
+            "scale": 0.396142578125,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 1024.8835202761002,
+                "y": 257.4830518920252
+            }
+        },
+        "level9normal.tmx": {
+            "scale": 0.36743659420289854,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 2313.3242943424134,
+                "y": 402.7905830149143
+            }
+        },
+        "level9purple.tmx": {
+            "scale": 0.36743659420289854,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 2054.776284974732,
+                "y": 315.7007272279059
+            }
+        }
+    },
+    "last.exportedFilePath": "/home/yikuan/Documents/Git Repos/A-Time-Between-Worlds/tilemaps",
+    "map.lastUsedExportFilter": "All Files (*)",
+    "map.lastUsedFormat": "tmx",
+    "map.width": 69,
         "level7.tmx": {
             "scale": 0.75,
             "selectedLayer": 0,
@@ -68,10 +106,12 @@
     "map.lastUsedExportFilter": "CSV files (*.csv)",
     "map.lastUsedFormat": "tmx",
     "openFiles": [
-        "level7.tmx"
     ],
     "project": "level1-normal.tiled-project",
     "recentFiles": [
+        "level9normal.tmx",
+        "level6.tmx",
+        "level9.tmx",
         "level7.tmx",
         "level2.tmx",
         "level1.tmx",
