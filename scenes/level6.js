@@ -1,13 +1,13 @@
-class Level2 extends Phaser.Scene {
-  // This level shows the player about gravity zones
+class Level6 extends Phaser.Scene {
+  // This level shows the player they need to switch worlds
 
-  levelLength = 32;
-  levelHeight = 32;
+  levelLength = 64;
+  levelHeight = 16;
 
   constructor() {
-    super("level2");
+    super("level6");
     this.handler = new Handler();
-    this.timeState = "normal";
+    this.timeState = "normal"; // "apocalyptic"
   }
 
   preload() {
@@ -15,8 +15,8 @@ class Level2 extends Phaser.Scene {
         {frameWidth: 32, frameHeight: 32});
     this.load.spritesheet("apocalyptic-player", "image/apocalyptic-player.png",
         {frameWidth: 32, frameHeight: 32});
-    this.load.tilemapCSV("normalmap2", "tilemaps/level2-normal.csv");
-    this.load.tilemapCSV("purplemap2", "tilemaps/level2-purple.csv");
+    this.load.tilemapCSV("normalmap6", "tilemaps/level6-normal.csv");
+    this.load.tilemapCSV("purplemap6", "tilemaps/level6-purple.csv");
     this.load.image("world1tiles", "image/blocksnormal.png");
     this.load.image("world1tiles-purple", "image/blockspurple.png");
     this.load.spritesheet("bg1", "image/parallax back 1.png",
@@ -28,6 +28,8 @@ class Level2 extends Phaser.Scene {
         "image/tree n road apocalyptic.png");
     this.load.spritesheet("portal", "image/portal.png",
         {frameWidth: 32, frameHeight: 32});
+    this.load.spritesheet("wizard", "image/mad scientist.png",
+        {frameWidth: 32, frameHeight: 32});
     this.load.audio("normalmusic", "muzak/nice_song.mp3");
     this.load.audio("apocmusic", "muzak/scary_song.mp3");
     this.load.audio("coinsound", "sound/coin.wav");
@@ -35,6 +37,7 @@ class Level2 extends Phaser.Scene {
     this.load.audio("explosionsound", "sound/explosion.wav");
     this.load.audio("jumpsound", "sound/jump.wav");
     this.load.audio("selectsound", "sound/select.wav");
+    this.load.spritesheet("fire", "image/fire.png", { frameWidth: 32, frameHeight: 32 });
   }
 
   create() {
@@ -66,60 +69,12 @@ class Level2 extends Phaser.Scene {
 
     // World Setup
     this.baseTilemap = this.make.tilemap(
-        {key: "normalmap2", tileWidth: 32, tileHeight: 32});
+        {key: "normalmap6", tileWidth: 32, tileHeight: 32});
     var world1tiles = this.baseTilemap.addTilesetImage("world1tileset",
         "world1tiles");
     this.tiles = this.baseTilemap.createLayer(0, world1tiles, 0, 0);
     this.tiles.scale = gameScale / 16;
     this.tiles.setCollisionBetween(1, 10);
-
-    // Particles
-    this.particles = this.add.particles('box');
-    this.particles.depth = 2;
-    this.particles.visible = false;
-    this.particles.createEmitter(
-        {
-            x: { min: 14 * 2 * gameScale, max: 18 * 2 * gameScale },
-            y: { min: 1700, max: 1750 },
-            speedX: 0,
-            speedY: { min: -100, max: -5 },
-            scale: { start: 0.4, end: 0 },
-            rotate: { min: 0, max: 360, end: 0 },
-            quantity: 4,
-            frequency: 1,
-            alpha: { end: 0, min: 0.2, max: 0.6 },
-            blendMode: 'ADD'
-        }
-    );
-    this.particles.createEmitter(
-        {
-            x: { min: 14 * 2 * gameScale, max: 18 * 2 * gameScale },
-            y: { min: 400, max: 1700 },
-            lifespan: 1000,
-            speedX: 0,
-            speedY: { min: -20, max: -5 },
-            scale: { start: 0.4, end: 0 },
-            rotate: { min: 0, max: 360, end: 0 },
-            quantity: 1,
-            frequency: 1,
-            alpha: { end: 0, min: 0.2, max: 0.6 },
-            blendMode: 'ADD'
-        }
-    );
-    
-    // Mad scientist
-    this.wizard = this.physics.add.sprite(200, 1710, "wizard");
-    this.wizard.setScale(gameScale / 16);
-    this.wizard.play("wizard-idle", true);
-    this.wizardText = this.add.text(100, 1650, 
-        "Sometimes, technology exists in one\n" + 
-        "world, but not another...\n",
-        {
-            stroke: "#00000",
-            strokeThickness: 5,
-            lineSpacing: -5,
-        }
-    );
 
     // Player Setup
     this.player = new Player(this.handler, this, "", "player");
@@ -127,6 +82,9 @@ class Level2 extends Phaser.Scene {
     this.playerCollider = this.physics.add.collider(this.player.sprite,
         this.tiles);
     this.player.sprite.depth = 2;
+    this.player.sprite.x = 0;
+    this.player.velocityCapX = 1000;
+    // Spawns the player on the ground
     this.player.sprite.y = ((this.levelHeight - 4) * 32) * (gameScale / 16);
 
     // HUD
@@ -142,7 +100,7 @@ class Level2 extends Phaser.Scene {
     // Makes entities for each special tile
     this.tiles.forEachTile((tile) => {
       if (tile.index === 69) {
-        let endPortal = new Portal(this.handler, this, "portal", "portal", "level2", "level3");
+        let endPortal = new Portal(this.handler, this, "portal", "portal", "level6","level7");
         endPortal.setCollector(this.player);
         endPortal.sprite.x = (tile.x + 0.5) * tileSize * (gameScale / 16);
         endPortal.sprite.y = (tile.y + 0.5) * tileSize * (gameScale / 16);
@@ -152,6 +110,22 @@ class Level2 extends Phaser.Scene {
         bouncePad.sprite.x = (tile.x + 0.5) * tileSize * (gameScale / 16);
         bouncePad.sprite.y = (tile.y + 0.5) * tileSize * (gameScale / 16);
         this.handler.addEntity(bouncePad);
+      } else if (tile.index === 88) {
+          // LOL!!!!
+          this.anims.create({
+              key: "flames",
+              frames: this.anims.generateFrameNumbers("fire", { start: 0, end: 11 }),
+              frameRate: 8,
+              repeat: -1
+          });
+
+          let flames = new Fire(this.handler, this, "fire", "fire");
+          flames.sprite.x = (tile.x + 0.5) * tileSize * (gameScale / 16);
+          flames.sprite.y = (tile.y + 0.5) * tileSize * (gameScale / 16);
+          this.handler.addEntity(flames);
+          flames.sprite.depth = 3;
+
+          flames.sprite.play("flames", true);
       }
     });
 
@@ -186,6 +160,14 @@ class Level2 extends Phaser.Scene {
       frameRate: 8,
       repeat: 0
     });
+
+    this.anims.create({
+        key: "wizard-idle",
+        frames: this.anims.generateFrameNumbers("wizard", { start: 0, end: 1 }),
+        frameRate: 2,
+        repeat: -1
+    });
+
     // Music
     this.music1 = this.sound.add("normalmusic");
     this.music1.loop = true;
@@ -197,13 +179,6 @@ class Level2 extends Phaser.Scene {
   }
 
   update() {
-    const textDistance = Math.sqrt((this.player.sprite.x - this.wizard.x)**2 + (this.player.sprite.y - this.wizard.y)**2);
-    if (textDistance < 100) {
-        this.wizardText.setAlpha(((100 - textDistance) / 100)**0.2);
-    } else {
-        this.wizardText.setAlpha(0);
-    }
-
     this.internalClock++;
 
     this.handler.update();
@@ -219,20 +194,9 @@ class Level2 extends Phaser.Scene {
 
     let cameraY = this.cameras.main.scrollY;
     this.background3.tilePositionY = cameraY / ((this.levelHeight / 16) * 15);
-    this.background4.tilePositionY = cameraY / ((this.levelHeight / 16) *  7);
+    this.background4.tilePositionY = cameraY / ((this.levelHeight / 16) * 7);
     this.background5.tilePositionY = cameraY / ((this.levelHeight / 16) * 13);
 
-    try {
-      // Adds in gravity zones
-      if (this.player.sprite.x > 14 * 2 * gameScale && this.player.sprite.x < 18 * 2 * gameScale && this.timeState === "apocalyptic") {
-        this.player.sprite.setGravityY(-200);
-      } else if (this.timeState === "apocalyptic") {
-        this.player.sprite.setGravityY(1000);
-      } else {
-        this.player.sprite.setGravityY(1700);
-      }
-    }
-    catch (err) {}
   }
 
   onTimeStateChange() {
@@ -242,7 +206,7 @@ class Level2 extends Phaser.Scene {
     switch (this.timeState) {
       case "normal":
         this.baseTilemap = this.make.tilemap(
-            {key: "normalmap2", tileWidth: 32, tileHeight: 32});
+            {key: "normalmap6", tileWidth: 32, tileHeight: 32});
         var world1tiles = this.baseTilemap.addTilesetImage("world1tileset",
             "world1tiles");
         this.tiles = this.baseTilemap.createLayer(0, world1tiles, 0, 0);
@@ -259,14 +223,13 @@ class Level2 extends Phaser.Scene {
         this.background5.setTexture("background5-normal");
 
         this.player.sprite.tint = 0xffffff;
-        this.particles.visible = false;
 
         this.music1.setVolume(1);
         this.music2.setVolume(0);
         break;
       case "apocalyptic":
         this.baseTilemap = this.make.tilemap(
-            {key: "purplemap2", tileWidth: 32, tileHeight: 32});
+            {key: "purplemap6", tileWidth: 32, tileHeight: 32});
         var world1tiles = this.baseTilemap.addTilesetImage("world1tileset",
             "world1tiles-purple");
         this.tiles = this.baseTilemap.createLayer(0, world1tiles, 0, 0);
@@ -283,7 +246,6 @@ class Level2 extends Phaser.Scene {
         this.background5.setTexture("background5-apocalyptic");
 
         this.player.sprite.tint = 0xee66ff; // I couldn't think of a way to seamlessly switch spritesheets, so this is a temporary solution to that.
-        this.particles.visible = true;
 
         this.music1.setVolume(0);
         this.music2.setVolume(1);

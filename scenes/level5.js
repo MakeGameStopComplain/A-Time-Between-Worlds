@@ -159,7 +159,7 @@ class Level5 extends Phaser.Scene {
         wall.depth = 0;
         this.backgroundWalls.push(wall);
       } else if (tile.index === 69) {
-        let endPortal = new Portal(this.handler, this, "portal", "portal", "level1","level2");
+        let endPortal = new Portal(this.handler, this, "portal", "portal", "level5","level6");
         endPortal.setCollector(this.player);
         endPortal.sprite.x = (tile.x + 0.5) * tileSize * (gameScale / 16);
         endPortal.sprite.y = (tile.y + 0.5) * tileSize * (gameScale / 16);
